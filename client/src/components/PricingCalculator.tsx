@@ -23,18 +23,21 @@ interface PricingOption {
 // Pricing data structure
 const pricingData = {
   basePrice: {
-    individual: 199,
-    business: 499,
+    individual: 250, // Federal + State of Residence
+    business: 499,   // Placeholder until we get business pricing details
   },
   additionalOptions: {
     individual: [
-      { id: "w2", label: "W-2 Income", price: 25, description: "Income from employment" },
-      { id: "1099", label: "1099 Income", price: 50, description: "Independent contractor/freelance income" },
-      { id: "investments", label: "Investment Income", price: 75, description: "Stocks, bonds, dividends, etc." },
-      { id: "crypto", label: "Cryptocurrency", price: 100, description: "Trading or mining cryptocurrency" },
-      { id: "rental", label: "Rental Property", price: 150, description: "Income from rental properties" },
-      { id: "foreign", label: "Foreign Income", price: 200, description: "Income from foreign sources" },
-      { id: "rsu", label: "RSUs/Stock Options", price: 175, description: "Restricted stock units or stock options" },
+      { id: "itemized", label: "Itemized Deductions", price: 45, description: "Schedule A deductions" },
+      { id: "self-employment", label: "Self-Employment", price: 45, description: "Schedule C for sole proprietors" },
+      { id: "rental", label: "Rental Property", price: 45, description: "Schedule E (per property)" },
+      { id: "depreciation", label: "Depreciation Schedule", price: 45, description: "Per property, first year with us only" },
+      { id: "capital-gains", label: "Capital Gains", price: 25, description: "Schedule D for investment sales" },
+      { id: "property-sale", label: "Sale of Property or 1031 Exchange", price: 50, description: "Real estate transactions" },
+      { id: "home-office", label: "Home Office", price: 25, description: "Home office deduction" },
+      { id: "additional-state", label: "Additional State Filings", price: 45, description: "Per additional state" },
+      { id: "revisions", label: "Revisions Due To Missing Information", price: 50, description: "Additional charge for missing information" },
+      { id: "foreign", label: "Foreign Income or Account", price: 100, description: "International income or accounts" },
     ],
     business: [
       { id: "llc", label: "Single-Member LLC", price: 100, description: "Simple pass-through LLC" },
