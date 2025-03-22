@@ -16,9 +16,9 @@ export default function HowItWorks() {
     },
     {
       icon: <CheckCircle className="h-8 w-8" />,
-      title: "3. Expert Review & Filing",
+      title: "3. Review and Relax",
       description:
-        "A tax professional reviews everything, answers your questions, and files your taxes with guaranteed accuracy.",
+        "Once your return is ready, simply review, sign, and we'll e-file it for you—fast, accurate, and done.",
     },
   ];
 
