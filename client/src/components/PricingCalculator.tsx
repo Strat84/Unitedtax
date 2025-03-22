@@ -561,8 +561,8 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
               <h3 className="text-lg font-semibold mb-2">Your Estimated Price</h3>
               <div className="text-4xl font-bold text-primary">${estimatedPrice}</div>
               
-              {/* Show detailed breakdown for rental properties */}
-              {returnType && selectedOptions.includes("rental") && (
+              {/* Show detailed breakdown for all selections */}
+              {returnType && (
                 <div className="mt-4 mx-auto max-w-md text-left bg-slate-50 p-3 rounded-md border">
                   <h4 className="font-medium text-center mb-2">Price Breakdown</h4>
                   <div className="space-y-1 text-sm">
@@ -571,31 +571,33 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                       <span>${pricingData.basePrice[returnType]}</span>
                     </div>
                     
-                    {/* Rental property breakdown */}
-                    <div className="pt-1">
-                      <div className="font-medium">Rental Properties:</div>
-                      {isFirstYear ? (
-                        <div className="flex justify-between pl-2">
-                          <span>{optionCounters["rental"] || 1} properties × $90:</span>
-                          <span>+${(optionCounters["rental"] || 1) * 90}</span>
-                        </div>
-                      ) : (
-                        <>
-                          {existingRentalCount > 0 && (
-                            <div className="flex justify-between pl-2">
-                              <span>{existingRentalCount} existing properties × $45:</span>
-                              <span>+${existingRentalCount * 45}</span>
-                            </div>
-                          )}
-                          {newRentalCount > 0 && (
-                            <div className="flex justify-between pl-2">
-                              <span>{newRentalCount} new properties × $90:</span>
-                              <span>+${newRentalCount * 90}</span>
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </div>
+                    {/* Rental property breakdown - only shown if rental is selected */}
+                    {selectedOptions.includes("rental") && (
+                      <div className="pt-1">
+                        <div className="font-medium">Rental Properties:</div>
+                        {isFirstYear ? (
+                          <div className="flex justify-between pl-2">
+                            <span>{optionCounters["rental"] || 1} properties × $90:</span>
+                            <span>+${(optionCounters["rental"] || 1) * 90}</span>
+                          </div>
+                        ) : (
+                          <>
+                            {existingRentalCount > 0 && (
+                              <div className="flex justify-between pl-2">
+                                <span>{existingRentalCount} existing properties × $45:</span>
+                                <span>+${existingRentalCount * 45}</span>
+                              </div>
+                            )}
+                            {newRentalCount > 0 && (
+                              <div className="flex justify-between pl-2">
+                                <span>{newRentalCount} new properties × $90:</span>
+                                <span>+${newRentalCount * 90}</span>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    )}
                     
                     {/* Other selected options */}
                     {selectedOptions
