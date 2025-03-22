@@ -10,9 +10,9 @@ export default function HowItWorks() {
     },
     {
       icon: <Cpu className="h-8 w-8" />,
-      title: "2. AI Review & Processing",
+      title: "2. We Do the Heavy Lifting",
       description:
-        "Our AI analyzes your documents, identifies potential deductions, and prepares your tax returns.",
+        "Our expert team prepares your return, typically within a week—no stress, no delays.",
     },
     {
       icon: <CheckCircle className="h-8 w-8" />,
