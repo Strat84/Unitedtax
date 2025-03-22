@@ -77,6 +77,14 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                     {tier.price}
                   </span>
                   <span className="text-neutral-500">/base price</span>
+                  <div className="mt-1">
+                    <button 
+                      onClick={() => onSelectPlan(tier.name)} 
+                      className="text-primary hover:underline text-sm font-medium"
+                    >
+                      Calculate My Price
+                    </button>
+                  </div>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {tier.features.map((feature, idx) => (
