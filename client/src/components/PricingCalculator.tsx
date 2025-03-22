@@ -174,52 +174,91 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       ? pricingData.additionalOptions[returnType].find(opt => opt.id === optionId)
       : null;
       
+    if (!option) return;
+    
+    // Create new options array first
     let newOptions;
     if (checked) {
       newOptions = [...selectedOptions, optionId];
-      
-      // Initialize counter if this is a counter option
-      if (option && (option as PricingOption).isCounter) {
-        setOptionCounters(prev => ({
-          ...prev,
-          [optionId]: (option as PricingOption).counterInitialValue || 1
-        }));
-      }
     } else {
       newOptions = selectedOptions.filter(id => id !== optionId);
-      
-      // Remove counter if unchecking a counter option
-      if (option && (option as PricingOption).isCounter) {
-        setOptionCounters(prev => {
-          const newCounters = { ...prev };
-          delete newCounters[optionId];
-          return newCounters;
-        });
-      }
     }
     
+    // Update selected options
     setSelectedOptions(newOptions);
     
-    // Recalculate price
-    setTimeout(() => {
-      const newPrice = calculatePrice();
-      setEstimatedPrice(newPrice);
-    }, 0);
+    // Handle counters in a separate immediate step
+    if (checked && (option as PricingOption).isCounter) {
+      setOptionCounters(prev => ({
+        ...prev,
+        [optionId]: (option as PricingOption).counterInitialValue || 1
+      }));
+    } else if (!checked && (option as PricingOption).isCounter) {
+      setOptionCounters(prev => {
+        const newCounters = { ...prev };
+        delete newCounters[optionId];
+        return newCounters;
+      });
+    }
+    
+    // Force immediate price calculation with the updated state
+    // This uses the function argument form of setState to ensure we have the latest state
+    setEstimatedPrice(currentPrice => {
+      // Create a new calculation that uses the latest selected options and counters
+      let base = pricingData.basePrice[returnType!];
+      let additionalCosts = 0;
+      
+      for (const id of newOptions) {
+        const opt = pricingData.additionalOptions[returnType!].find(o => o.id === id);
+        if (!opt) continue;
+        
+        if ((opt as PricingOption).isCounter) {
+          if (opt.id === "rental") {
+            if (isFirstYear) {
+              additionalCosts += 90 * (optionCounters[opt.id] || 1);
+            } else {
+              const existingCost = 45 * existingRentalCount;
+              const newCost = 90 * newRentalCount;
+              additionalCosts += (existingCost + newCost);
+            }
+          } else if (id === optionId && checked) {
+            // For newly checked item, use initial value
+            additionalCosts += ((opt as PricingOption).counterPrice || opt.price) * 
+              ((opt as PricingOption).counterInitialValue || 1);
+          } else if (id !== optionId) {
+            // For existing items, use current counter value
+            additionalCosts += ((opt as PricingOption).counterPrice || opt.price) * 
+              (optionCounters[id] || 1);
+          }
+        } else {
+          additionalCosts += opt.price;
+        }
+      }
+      
+      return base + additionalCosts;
+    });
   };
   
   // Handle counter changes
   const handleCounterChange = (optionId: string, newValue: number) => {
     // Ensure minimum value is 1
     const adjustedValue = Math.max(1, newValue);
+    
+    // Store counter value
     setOptionCounters(prev => ({
       ...prev,
       [optionId]: adjustedValue
     }));
     
     // For rental properties, we need to update the specific counts
+    let newExistingCount = existingRentalCount;
+    let newRentalCountValue = newRentalCount;
+    
     if (optionId === "rental") {
       if (isFirstYear) {
         // For first year clients, we just need the total count
+        newExistingCount = 0;
+        newRentalCountValue = 0;
         setNewRentalCount(0);
         setExistingRentalCount(0);
       } else {
@@ -227,53 +266,130 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
         const currentTotal = existingRentalCount + newRentalCount;
         if (adjustedValue > currentTotal) {
           // If increasing, add to existing properties
-          setExistingRentalCount(existingRentalCount + (adjustedValue - currentTotal));
+          newExistingCount = existingRentalCount + (adjustedValue - currentTotal);
+          setExistingRentalCount(newExistingCount);
         } else if (adjustedValue < currentTotal) {
           // If decreasing, remove from new properties first, then existing
           const newDiff = Math.min(newRentalCount, currentTotal - adjustedValue);
           const remainingDiff = (currentTotal - adjustedValue) - newDiff;
           
-          setNewRentalCount(Math.max(0, newRentalCount - newDiff));
-          setExistingRentalCount(Math.max(0, existingRentalCount - remainingDiff));
+          newRentalCountValue = Math.max(0, newRentalCount - newDiff);
+          newExistingCount = Math.max(0, existingRentalCount - remainingDiff);
+          
+          setNewRentalCount(newRentalCountValue);
+          setExistingRentalCount(newExistingCount);
         }
       }
     }
     
-    // Recalculate price
-    setTimeout(() => {
-      const newPrice = calculatePrice();
-      setEstimatedPrice(newPrice);
-    }, 0);
+    // Calculate the new price with the updated values
+    setEstimatedPrice(currentPrice => {
+      if (!returnType) return null;
+      
+      let base = pricingData.basePrice[returnType];
+      let additionalCosts = 0;
+      
+      // Add costs for selected options
+      for (const id of selectedOptions) {
+        const opt = pricingData.additionalOptions[returnType].find(o => o.id === id);
+        if (!opt) continue;
+        
+        if ((opt as PricingOption).isCounter) {
+          // For rental properties, calculate based on first year/returning status
+          if (opt.id === "rental") {
+            if (isFirstYear) {
+              // First year client - all properties are $90
+              additionalCosts += 90 * (id === optionId ? adjustedValue : (optionCounters[id] || 1));
+            } else {
+              // Returning client - existing properties $45, new properties $90
+              const existingCost = 45 * newExistingCount;
+              const newCost = 90 * newRentalCountValue;
+              additionalCosts += (existingCost + newCost);
+            }
+          } else {
+            // For other counter options
+            additionalCosts += ((opt as PricingOption).counterPrice || opt.price) * 
+              (id === optionId ? adjustedValue : (optionCounters[id] || 1));
+          }
+        } else {
+          // For regular options, just add the price
+          additionalCosts += opt.price;
+        }
+      }
+      
+      return base + additionalCosts;
+    });
   };
 
   // Handle first year toggle change
   const handleFirstYearChange = (checked: boolean) => {
     setIsFirstYear(checked);
     
+    // Update rental counts
+    let newExistingCount = 0;
+    let newRentalCountValue = 0;
+    
     if (checked) {
-      // If first year client is selected, we adjust the counter
-      // to be the total number of properties
-      const totalProperties = optionCounters["rental"] || 1;
-      setNewRentalCount(0);
-      setExistingRentalCount(0);
+      // If first year client is selected, reset both counts to 0
+      // (all properties are considered at the $90 rate)
+      newExistingCount = 0;
+      newRentalCountValue = 0;
     } else {
-      // If returning client is selected, initialize existing vs new properties
+      // If returning client is selected, set all properties as existing
       const totalProperties = optionCounters["rental"] || 1;
-      setExistingRentalCount(totalProperties);
-      setNewRentalCount(0);
+      newExistingCount = totalProperties;
+      newRentalCountValue = 0;
     }
     
-    // Recalculate price whenever this changes
-    setTimeout(() => {
-      const newPrice = calculatePrice();
-      setEstimatedPrice(newPrice);
-    }, 0);
+    // Update the state
+    setNewRentalCount(newRentalCountValue);
+    setExistingRentalCount(newExistingCount);
+    
+    // Calculate price with the updated state
+    setEstimatedPrice(currentPrice => {
+      if (!returnType || !selectedOptions.includes("rental")) return currentPrice;
+      
+      let base = pricingData.basePrice[returnType];
+      let additionalCosts = 0;
+      
+      // Add costs for all selected options
+      for (const id of selectedOptions) {
+        const opt = pricingData.additionalOptions[returnType].find(o => o.id === id);
+        if (!opt) continue;
+        
+        if ((opt as PricingOption).isCounter) {
+          // Special logic for rental properties
+          if (opt.id === "rental") {
+            if (checked) {
+              // First year client - all properties are $90
+              additionalCosts += 90 * (optionCounters[id] || 1);
+            } else {
+              // Returning client with existing properties
+              const existingCost = 45 * newExistingCount;
+              const newCost = 90 * newRentalCountValue;
+              additionalCosts += (existingCost + newCost);
+            }
+          } else {
+            // Other counter options
+            additionalCosts += ((opt as PricingOption).counterPrice || opt.price) * 
+              (optionCounters[id] || 1);
+          }
+        } else {
+          // Regular options
+          additionalCosts += opt.price;
+        }
+      }
+      
+      return base + additionalCosts;
+    });
   };
   
   // Handle existing rental count change
   const handleExistingRentalChange = (count: number) => {
     // Ensure we don't go below 0
     const newCount = Math.max(0, count);
+    
+    // Update state
     setExistingRentalCount(newCount);
     
     // Update total rental count in optionCounters
@@ -283,17 +399,49 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       "rental": Math.max(1, totalProperties)
     }));
     
-    // Recalculate price
-    setTimeout(() => {
-      const newPrice = calculatePrice();
-      setEstimatedPrice(newPrice);
-    }, 0);
+    // Calculate price immediately with new values
+    setEstimatedPrice(currentPrice => {
+      if (!returnType || !selectedOptions.includes("rental")) return currentPrice;
+      
+      let base = pricingData.basePrice[returnType];
+      let additionalCosts = 0;
+      
+      for (const id of selectedOptions) {
+        const opt = pricingData.additionalOptions[returnType].find(o => o.id === id);
+        if (!opt) continue;
+        
+        if ((opt as PricingOption).isCounter) {
+          if (opt.id === "rental") {
+            if (isFirstYear) {
+              // First year client - all properties are $90
+              additionalCosts += 90 * Math.max(1, totalProperties);
+            } else {
+              // Returning client - existing properties $45, new properties $90
+              const existingCost = 45 * newCount;
+              const newCost = 90 * newRentalCount;
+              additionalCosts += (existingCost + newCost);
+            }
+          } else {
+            // Other counter options
+            additionalCosts += ((opt as PricingOption).counterPrice || opt.price) * 
+              (optionCounters[id] || 1);
+          }
+        } else {
+          // Regular options
+          additionalCosts += opt.price;
+        }
+      }
+      
+      return base + additionalCosts;
+    });
   };
   
   // Handle new rental count change
   const handleNewRentalChange = (count: number) => {
     // Ensure we don't go below 0
     const newCount = Math.max(0, count);
+    
+    // Update state
     setNewRentalCount(newCount);
     
     // Update total rental count in optionCounters
@@ -303,11 +451,41 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       "rental": Math.max(1, totalProperties)
     }));
     
-    // Recalculate price
-    setTimeout(() => {
-      const newPrice = calculatePrice();
-      setEstimatedPrice(newPrice);
-    }, 0);
+    // Calculate price immediately with new values
+    setEstimatedPrice(currentPrice => {
+      if (!returnType || !selectedOptions.includes("rental")) return currentPrice;
+      
+      let base = pricingData.basePrice[returnType];
+      let additionalCosts = 0;
+      
+      for (const id of selectedOptions) {
+        const opt = pricingData.additionalOptions[returnType].find(o => o.id === id);
+        if (!opt) continue;
+        
+        if ((opt as PricingOption).isCounter) {
+          if (opt.id === "rental") {
+            if (isFirstYear) {
+              // First year client - all properties are $90
+              additionalCosts += 90 * Math.max(1, totalProperties);
+            } else {
+              // Returning client - existing properties $45, new properties $90
+              const existingCost = 45 * existingRentalCount;
+              const newCost = 90 * newCount;
+              additionalCosts += (existingCost + newCost);
+            }
+          } else {
+            // Other counter options
+            additionalCosts += ((opt as PricingOption).counterPrice || opt.price) * 
+              (optionCounters[id] || 1);
+          }
+        } else {
+          // Regular options
+          additionalCosts += opt.price;
+        }
+      }
+      
+      return base + additionalCosts;
+    });
   };
   
   // Reset the calculator
