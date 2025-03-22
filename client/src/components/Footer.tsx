@@ -6,11 +6,11 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="mb-4 bg-white inline-block p-2 rounded">
+            <div className="mb-4">
               <img 
                 src="/images/united-tax-logo.png" 
-                alt="UnitedTax.AI Logo" 
-                className="h-10" 
+                alt="United Tax Logo" 
+                className="h-16" 
               />
             </div>
             <p className="mb-4">

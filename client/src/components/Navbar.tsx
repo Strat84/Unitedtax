@@ -21,8 +21,8 @@ export default function Navbar({ onStartTaxes }: NavbarProps) {
             <a href="#" className="flex items-center">
               <img 
                 src="/images/united-tax-logo.png" 
-                alt="UnitedTax.AI Logo" 
-                className="h-10 mr-2" 
+                alt="United Tax Logo" 
+                className="h-12 mr-2" 
               />
             </a>
           </div>
