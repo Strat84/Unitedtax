@@ -16,13 +16,13 @@ export default function Navbar({ onStartTaxes }: NavbarProps) {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+        <div className="flex justify-between h-20 items-center">
           <div className="flex items-center">
             <a href="#" className="flex items-center">
               <img 
                 src="/images/united-tax-logo.png" 
                 alt="United Tax Logo" 
-                className="h-12 mr-2" 
+                className="h-16 mr-2" 
               />
             </a>
           </div>
