@@ -59,11 +59,11 @@ export default function WhoWeHelp() {
               key={index}
               className="bg-white rounded-lg shadow hover:shadow-md transition-shadow overflow-hidden border border-neutral-200 flex flex-col"
             >
-              <div className="h-48 overflow-hidden">
+              <div className="aspect-[3/2] overflow-hidden">
                 <img 
                   src={audience.image} 
                   alt={audience.alt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="p-6 flex-1 flex flex-col">
