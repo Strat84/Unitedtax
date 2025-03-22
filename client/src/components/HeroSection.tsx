@@ -43,9 +43,9 @@ export default function HeroSection({
           </div>
           <div className="lg:w-1/2">
             <img
-              src="https://images.unsplash.com/photo-1593510987185-1ec2256148a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-              alt="AI-powered tax preparation illustration"
-              className="rounded-lg shadow-lg w-full"
+              src="/images/hero-image.png"
+              alt="Business professional using UnitedTax.AI service"
+              className="rounded-lg shadow-lg w-full object-cover"
             />
           </div>
         </div>
