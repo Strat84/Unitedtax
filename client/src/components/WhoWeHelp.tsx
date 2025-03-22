@@ -11,6 +11,8 @@ export default function WhoWeHelp() {
         "Business expense optimization",
         "Entity-specific tax strategies",
       ],
+      image: "/images/female-entrepreneur.png",
+      alt: "Female entrepreneur in a vineyard"
     },
     {
       icon: <Laptop className="h-8 w-8" />,
@@ -18,6 +20,8 @@ export default function WhoWeHelp() {
       description:
         "Tax solutions for self-employed professionals with 1099 income and business expenses.",
       features: ["Quarterly tax planning", "Home office deduction assistance"],
+      image: "https://placehold.co/400x400/25638b/FFFFFF/png?text=Freelancer",
+      alt: "Freelancer"
     },
     {
       icon: <Home className="h-8 w-8" />,
@@ -25,6 +29,8 @@ export default function WhoWeHelp() {
       description:
         "Expert tax handling for rental properties, depreciation, and property-related deductions.",
       features: ["Depreciation optimization", "1031 exchange guidance"],
+      image: "https://placehold.co/400x400/25638b/FFFFFF/png?text=Real+Estate",
+      alt: "Real estate investor"
     },
     {
       icon: <TrendingUp className="h-8 w-8" />,
@@ -32,6 +38,8 @@ export default function WhoWeHelp() {
       description:
         "Specialized tax handling for tech professionals with complex equity compensation.",
       features: ["Multi-state tax filing", "RSU vesting tax strategy"],
+      image: "https://placehold.co/400x400/25638b/FFFFFF/png?text=Tech+Employee",
+      alt: "Tech employee"
     },
   ];
 
@@ -45,25 +53,36 @@ export default function WhoWeHelp() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {audiences.map((audience, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow hover:shadow-md transition-shadow p-6 border border-neutral-200"
+              className="bg-white rounded-lg shadow hover:shadow-md transition-shadow overflow-hidden border border-neutral-200 flex flex-col"
             >
-              <div className="text-primary mb-4">{audience.icon}</div>
-              <h3 className="text-xl font-semibold mb-3 text-neutral-900">
-                {audience.title}
-              </h3>
-              <p className="text-neutral-600 mb-4">{audience.description}</p>
-              <ul className="text-sm text-neutral-500 space-y-2">
-                {audience.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start">
-                    <Check className="h-4 w-4 text-teal-500 mt-1 mr-2" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={audience.image} 
+                  alt={audience.alt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex items-center mb-3">
+                  <div className="text-primary mr-3">{audience.icon}</div>
+                  <h3 className="text-xl font-semibold text-neutral-900">
+                    {audience.title}
+                  </h3>
+                </div>
+                <p className="text-neutral-600 mb-4">{audience.description}</p>
+                <ul className="text-sm text-neutral-500 space-y-2 mt-auto">
+                  {audience.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <Check className="h-4 w-4 text-teal-500 mt-1 mr-2" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
