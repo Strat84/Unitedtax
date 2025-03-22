@@ -12,12 +12,20 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Plus, Minus } from "lucide-react";
 
 interface PricingOption {
   id: string;
   label: string;
   price: number;
   description?: string;
+  isCounter?: boolean;
+  counterLabel?: string;
+  counterPrice?: number;
+  counterDescription?: string;
+  counterInitialValue?: number;
+  counterFirstYearNote?: string;
 }
 
 // Pricing data structure
@@ -30,8 +38,18 @@ const pricingData = {
     individual: [
       { id: "itemized", label: "Itemized Deductions", price: 45, description: "Schedule A deductions" },
       { id: "self-employment", label: "Self-Employment", price: 45, description: "Schedule C for sole proprietors" },
-      { id: "rental", label: "Rental Property", price: 45, description: "Schedule E (per property)" },
-      { id: "depreciation", label: "Depreciation Schedule", price: 45, description: "Per property, first year with us only" },
+      { 
+        id: "rental", 
+        label: "Rental Properties", 
+        price: 90, 
+        description: "Schedule E rental properties",
+        isCounter: true,
+        counterLabel: "Number of Rental Properties",
+        counterPrice: 90, // $45 per property + $45 depreciation first year
+        counterDescription: "Cost per property",
+        counterInitialValue: 1,
+        counterFirstYearNote: "Note: First year clients have an additional $45 per property added for creating the depreciation schedule. This charge will not be assessed in following years."
+      },
       { id: "capital-gains", label: "Capital Gains", price: 25, description: "Schedule D for investment sales" },
       { id: "property-sale", label: "Sale of Property or 1031 Exchange", price: 50, description: "Real estate transactions" },
       { id: "home-office", label: "Home Office", price: 25, description: "Home office deduction" },
@@ -60,6 +78,7 @@ interface PricingCalculatorProps {
 export default function PricingCalculator({ open, onOpenChange }: PricingCalculatorProps) {
   const [returnType, setReturnType] = useState<"individual" | "business" | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [optionCounters, setOptionCounters] = useState<Record<string, number>>({});
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
 
   // Calculate the price based on selections
@@ -67,10 +86,21 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
     if (!returnType) return null;
     
     const base = pricingData.basePrice[returnType];
-    const additionalCosts = selectedOptions.reduce((total, optionId) => {
+    let additionalCosts = 0;
+    
+    // Add costs for selected options
+    for (const optionId of selectedOptions) {
       const option = pricingData.additionalOptions[returnType].find(opt => opt.id === optionId);
-      return total + (option?.price || 0);
-    }, 0);
+      if (!option) continue;
+      
+      if (option.isCounter && optionCounters[optionId]) {
+        // For counter options (like rental properties), multiply by the count
+        additionalCosts += (option.counterPrice || option.price) * optionCounters[optionId];
+      } else {
+        // For regular options, just add the price
+        additionalCosts += option.price;
+      }
+    }
     
     return base + additionalCosts;
   };
@@ -79,19 +109,59 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
   const handleReturnTypeChange = (value: "individual" | "business") => {
     setReturnType(value);
     setSelectedOptions([]);
+    setOptionCounters({});
     const newPrice = pricingData.basePrice[value];
     setEstimatedPrice(newPrice);
   };
 
   // Handle option selection
   const handleOptionChange = (optionId: string, checked: boolean) => {
+    // Find the option
+    const option = returnType 
+      ? pricingData.additionalOptions[returnType].find(opt => opt.id === optionId)
+      : null;
+      
     let newOptions;
     if (checked) {
       newOptions = [...selectedOptions, optionId];
+      
+      // Initialize counter if this is a counter option
+      if (option?.isCounter) {
+        setOptionCounters(prev => ({
+          ...prev,
+          [optionId]: option.counterInitialValue || 1
+        }));
+      }
     } else {
       newOptions = selectedOptions.filter(id => id !== optionId);
+      
+      // Remove counter if unchecking a counter option
+      if (option?.isCounter) {
+        setOptionCounters(prev => {
+          const newCounters = { ...prev };
+          delete newCounters[optionId];
+          return newCounters;
+        });
+      }
     }
+    
     setSelectedOptions(newOptions);
+    
+    // Recalculate price
+    setTimeout(() => {
+      const newPrice = calculatePrice();
+      setEstimatedPrice(newPrice);
+    }, 0);
+  };
+  
+  // Handle counter changes
+  const handleCounterChange = (optionId: string, newValue: number) => {
+    // Ensure minimum value is 1
+    const adjustedValue = Math.max(1, newValue);
+    setOptionCounters(prev => ({
+      ...prev,
+      [optionId]: adjustedValue
+    }));
     
     // Recalculate price
     setTimeout(() => {
@@ -104,6 +174,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
   const resetCalculator = () => {
     setReturnType(null);
     setSelectedOptions([]);
+    setOptionCounters({});
     setEstimatedPrice(null);
   };
 
@@ -174,8 +245,62 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                           <div className="text-sm text-muted-foreground">{option.description}</div>
                         )}
                       </Label>
-                      <div className="font-medium">+${option.price}</div>
+                      {option.isCounter ? (
+                        <div className="text-right font-medium">
+                          +${(option.counterPrice || option.price) * (optionCounters[option.id] || 1)}
+                        </div>
+                      ) : (
+                        <div className="font-medium">+${option.price}</div>
+                      )}
                     </div>
+                    
+                    {/* Counter interface for rental properties or other counted items */}
+                    {option.isCounter && selectedOptions.includes(option.id) && (
+                      <div className="mt-4 pl-9">
+                        <div className="flex items-center space-x-3">
+                          {option.counterLabel && (
+                            <Label className="text-sm">{option.counterLabel}</Label>
+                          )}
+                          <div className="flex items-center border rounded-md">
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                              onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) - 1)}
+                            >
+                              <Minus className="h-4 w-4" />
+                            </Button>
+                            <Input
+                              type="number"
+                              min="1"
+                              value={optionCounters[option.id] || 1}
+                              onChange={(e) => handleCounterChange(option.id, parseInt(e.target.value) || 1)}
+                              className="h-8 w-16 text-center border-0"
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                              onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) + 1)}
+                            >
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            ${option.counterPrice || option.price} {option.counterDescription}
+                          </div>
+                        </div>
+                        
+                        {/* First year note for rental properties */}
+                        {option.counterFirstYearNote && (
+                          <div className="mt-2 text-sm text-amber-600 bg-amber-50 p-2 rounded">
+                            {option.counterFirstYearNote}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </Card>
                 ))}
               </div>
