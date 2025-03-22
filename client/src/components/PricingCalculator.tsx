@@ -41,14 +41,14 @@ const pricingData = {
       { 
         id: "rental", 
         label: "Rental Properties", 
-        price: 90, 
+        price: 45, 
         description: "Schedule E rental properties",
         isCounter: true,
         counterLabel: "Number of Rental Properties",
-        counterPrice: 90, // $45 per property + $45 depreciation first year
+        counterPrice: 45, // Base price, will be adjusted to 90 for first year clients
         counterDescription: "Cost per property",
         counterInitialValue: 1,
-        counterFirstYearNote: "Note: First year clients have an additional $45 per property added for creating the depreciation schedule. This charge will not be assessed in following years."
+        counterFirstYearNote: "Note: First year clients have an additional $45 per property added for creating the depreciation schedule."
       },
       { id: "capital-gains", label: "Capital Gains", price: 25, description: "Schedule D for investment sales" },
       { id: "property-sale", label: "Sale of Property or 1031 Exchange", price: 50, description: "Real estate transactions" },
@@ -79,6 +79,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
   const [returnType, setReturnType] = useState<"individual" | "business" | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [optionCounters, setOptionCounters] = useState<Record<string, number>>({});
+  const [isFirstYear, setIsFirstYear] = useState<boolean>(true);
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
 
   // Calculate the price based on selections
@@ -94,8 +95,14 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       if (!option) continue;
       
       if (option.isCounter && optionCounters[optionId]) {
-        // For counter options (like rental properties), multiply by the count
-        additionalCosts += (option.counterPrice || option.price) * optionCounters[optionId];
+        // For rental properties, adjust price based on first year status
+        if (option.id === "rental") {
+          const pricePerProperty = isFirstYear ? 90 : 45; // $90 for first year, $45 for returning clients
+          additionalCosts += pricePerProperty * optionCounters[optionId];
+        } else {
+          // For other counter options, use standard pricing
+          additionalCosts += (option.counterPrice || option.price) * optionCounters[optionId];
+        }
       } else {
         // For regular options, just add the price
         additionalCosts += option.price;
@@ -170,11 +177,23 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
     }, 0);
   };
 
+  // Handle first year toggle change
+  const handleFirstYearChange = (checked: boolean) => {
+    setIsFirstYear(checked);
+    
+    // Recalculate price whenever this changes
+    setTimeout(() => {
+      const newPrice = calculatePrice();
+      setEstimatedPrice(newPrice);
+    }, 0);
+  };
+  
   // Reset the calculator
   const resetCalculator = () => {
     setReturnType(null);
     setSelectedOptions([]);
     setOptionCounters({});
+    setIsFirstYear(true);
     setEstimatedPrice(null);
   };
 
@@ -192,6 +211,23 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
         </DialogHeader>
 
         <div className="py-6">
+          {/* Client status */}
+          <div className="mb-6">
+            <div className="flex items-center space-x-3 p-4 border rounded-md bg-slate-50">
+              <Checkbox 
+                id="first-year" 
+                checked={isFirstYear} 
+                onCheckedChange={(checked) => handleFirstYearChange(checked === true)}
+              />
+              <Label htmlFor="first-year" className="flex-1 cursor-pointer">
+                <div className="font-medium">First year with UnitedTax.AI</div>
+                <div className="text-sm text-muted-foreground">
+                  First-time clients require additional setup (like creating depreciation schedules for rental properties)
+                </div>
+              </Label>
+            </div>
+          </div>
+        
           {/* Step 1: Select return type */}
           <div className="mb-8">
             <h3 className="font-medium mb-4 text-lg">What type of tax return do you need?</h3>
@@ -247,7 +283,11 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                       </Label>
                       {option.isCounter ? (
                         <div className="text-right font-medium">
-                          +${(option.counterPrice || option.price) * (optionCounters[option.id] || 1)}
+                          {option.id === "rental" ? (
+                            <>+${(isFirstYear ? 90 : 45) * (optionCounters[option.id] || 1)}</>
+                          ) : (
+                            <>+${(option.counterPrice || option.price) * (optionCounters[option.id] || 1)}</>
+                          )}
                         </div>
                       ) : (
                         <div className="font-medium">+${option.price}</div>
@@ -289,14 +329,27 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                             </Button>
                           </div>
                           <div className="text-sm text-muted-foreground">
-                            ${option.counterPrice || option.price} {option.counterDescription}
+                            {option.id === "rental" ? (
+                              <>
+                                ${isFirstYear ? 90 : 45} {option.counterDescription}
+                                {isFirstYear && (
+                                  <span className="ml-1 text-amber-600">
+                                    (includes $45 depreciation setup)
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                ${option.counterPrice || option.price} {option.counterDescription}
+                              </>
+                            )}
                           </div>
                         </div>
                         
                         {/* First year note for rental properties */}
-                        {option.counterFirstYearNote && (
+                        {option.id === "rental" && option.counterFirstYearNote && (
                           <div className="mt-2 text-sm text-amber-600 bg-amber-50 p-2 rounded">
-                            {option.counterFirstYearNote}
+                            {isFirstYear ? option.counterFirstYearNote : "Returning clients pay $45 per rental property."}
                           </div>
                         )}
                       </div>
