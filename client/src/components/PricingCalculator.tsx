@@ -211,22 +211,6 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
         </DialogHeader>
 
         <div className="py-6">
-          {/* Client status */}
-          <div className="mb-6">
-            <div className="flex items-center space-x-3 p-4 border rounded-md bg-slate-50">
-              <Checkbox 
-                id="first-year" 
-                checked={isFirstYear} 
-                onCheckedChange={(checked) => handleFirstYearChange(checked === true)}
-              />
-              <Label htmlFor="first-year" className="flex-1 cursor-pointer">
-                <div className="font-medium">First year with UnitedTax.AI</div>
-                <div className="text-sm text-muted-foreground">
-                  First-time clients require additional setup (like creating depreciation schedules for rental properties)
-                </div>
-              </Label>
-            </div>
-          </div>
         
           {/* Step 1: Select return type */}
           <div className="mb-8">
@@ -346,10 +330,27 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                           </div>
                         </div>
                         
-                        {/* First year note for rental properties */}
-                        {option.id === "rental" && option.counterFirstYearNote && (
-                          <div className="mt-2 text-sm text-amber-600 bg-amber-50 p-2 rounded">
-                            {isFirstYear ? option.counterFirstYearNote : "Returning clients pay $45 per rental property."}
+                        {/* First year toggle for rental properties */}
+                        {option.id === "rental" && (
+                          <div className="mt-4 border-t pt-4">
+                            <div className="flex items-center space-x-3">
+                              <Checkbox 
+                                id="first-year-rental" 
+                                checked={isFirstYear} 
+                                onCheckedChange={(checked) => handleFirstYearChange(checked === true)}
+                              />
+                              <Label htmlFor="first-year-rental" className="flex-1 cursor-pointer">
+                                <div className="font-medium">First-year customer or new rental property</div>
+                                <div className="text-sm text-muted-foreground">
+                                  First-time properties require a $45 fee for creating depreciation schedules
+                                </div>
+                              </Label>
+                            </div>
+                            <div className="mt-2 text-sm text-amber-600 bg-amber-50 p-2 rounded">
+                              {isFirstYear 
+                                ? "New rental properties require a $45 setup fee for creating depreciation schedules, for a total of $90 per property." 
+                                : "Returning clients with existing depreciation schedules pay $45 per rental property."}
+                            </div>
                           </div>
                         )}
                       </div>
