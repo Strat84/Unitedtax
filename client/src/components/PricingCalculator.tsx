@@ -611,40 +611,49 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                             <p className="text-sm mb-1">Click below to provide details about your rental properties:</p>
                           </div>
                         ) : (
-                          <div className="flex items-center space-x-3">
-                            {(option as PricingOption).counterLabel && (
-                              <Label className="text-sm">{(option as PricingOption).counterLabel}</Label>
+                          <div className="flex flex-col space-y-3">
+                            <div className="flex items-center space-x-3">
+                              {(option as PricingOption).counterLabel && (
+                                <Label className="text-sm">{(option as PricingOption).counterLabel}</Label>
+                              )}
+                              <div className="flex items-center border rounded-md">
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 w-8 p-0"
+                                  onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) - 1)}
+                                >
+                                  <Minus className="h-4 w-4" />
+                                </Button>
+                                <Input
+                                  type="number"
+                                  min="1"
+                                  value={optionCounters[option.id] || 1}
+                                  onChange={(e) => handleCounterChange(option.id, parseInt(e.target.value) || 1)}
+                                  className="h-8 w-16 text-center border-0"
+                                />
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 w-8 p-0"
+                                  onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) + 1)}
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                ${(option as PricingOption).counterPrice || option.price} {(option as PricingOption).counterDescription}
+                              </div>
+                            </div>
+                            
+                            {/* Display note for K-1 forms */}
+                            {option.id === "k1-individual" && (option as PricingOption).counterFirstYearNote && (
+                              <div className="text-sm text-amber-600 bg-amber-50 p-2 rounded">
+                                {(option as PricingOption).counterFirstYearNote}
+                              </div>
                             )}
-                            <div className="flex items-center border rounded-md">
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0"
-                                onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) - 1)}
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <Input
-                                type="number"
-                                min="1"
-                                value={optionCounters[option.id] || 1}
-                                onChange={(e) => handleCounterChange(option.id, parseInt(e.target.value) || 1)}
-                                className="h-8 w-16 text-center border-0"
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0"
-                                onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) + 1)}
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              ${(option as PricingOption).counterPrice || option.price} {(option as PricingOption).counterDescription}
-                            </div>
                           </div>
                         )}
                         
