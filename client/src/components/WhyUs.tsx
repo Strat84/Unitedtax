@@ -3,14 +3,14 @@ import { Check, Quote } from "lucide-react";
 export default function WhyUs() {
   const benefits = [
     {
-      title: "AI-Powered Accuracy",
-      description:
-        "Our AI analyzes thousands of tax rules to maximize your deductions while ensuring compliance.",
-    },
-    {
       title: "Human Expert Review",
       description:
         "Every return is reviewed by a licensed tax professional before filing.",
+    },
+    {
+      title: "AI-Powered Accuracy",
+      description:
+        "Our AI analyzes thousands of tax rules to maximize your deductions while ensuring compliance.",
     },
     {
       title: "Transparent Flat-Rate Pricing",
