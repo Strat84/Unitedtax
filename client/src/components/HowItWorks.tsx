@@ -4,9 +4,9 @@ export default function HowItWorks() {
   const steps = [
     {
       icon: <Upload className="h-8 w-8" />,
-      title: "1. Upload Your Documents",
+      title: "1. Get Started in Minutes",
       description:
-        "Securely upload your tax documents and financial information through our user-friendly portal.",
+        "Just log in, answer a few simple questions, and upload your tax documents securely.",
     },
     {
       icon: <Cpu className="h-8 w-8" />,
