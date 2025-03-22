@@ -11,3 +11,22 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+@layer components {
+  .btn-gradient {
+    @apply relative overflow-hidden text-white;
+    background: linear-gradient(90deg, #47a9c7 0%, #25638b 100%);
+    transition: all 0.3s ease;
+  }
+  
+  .btn-gradient:hover {
+    background: linear-gradient(90deg, #3d98b6 0%, #205179 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 139, 0.2);
+  }
+  
+  .btn-gradient:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(37, 99, 139, 0.2);
+  }
+}

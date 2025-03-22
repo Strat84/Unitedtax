@@ -17,8 +17,7 @@ export default function FinalCTA({ onStartTaxes }: FinalCTAProps) {
         </p>
         <Button
           size="xl"
-          variant="secondary"
-          className="bg-white text-primary-700 hover:bg-primary-50"
+          className="bg-white text-primary-dark hover:bg-primary-50 border-2 border-primary-light shadow-md"
           onClick={onStartTaxes}
         >
           Start My Taxes Today

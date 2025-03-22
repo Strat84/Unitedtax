@@ -24,13 +24,17 @@ export default function HeroSection({
               designed for modern businesses and professionals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button size="lg" onClick={onStartTaxes}>
+              <Button 
+                size="lg" 
+                onClick={onStartTaxes}
+                className="btn-gradient"
+              >
                 Start My Taxes
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary-50"
+                className="border-primary-dark text-primary-dark hover:bg-primary-50"
                 onClick={onSeePricing}
               >
                 See Pricing

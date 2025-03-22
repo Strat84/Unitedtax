@@ -51,7 +51,7 @@ export default function Navbar({ onStartTaxes }: NavbarProps) {
               >
                 Pricing
               </a>
-              <Button className="ml-4" onClick={onStartTaxes}>
+              <Button className="ml-4 btn-gradient" onClick={onStartTaxes}>
                 Start My Taxes
               </Button>
             </div>
@@ -102,7 +102,7 @@ export default function Navbar({ onStartTaxes }: NavbarProps) {
               Pricing
             </a>
             <Button
-              className="mt-3 w-full"
+              className="mt-3 w-full btn-gradient"
               onClick={() => {
                 onStartTaxes();
                 setMobileMenuOpen(false);
