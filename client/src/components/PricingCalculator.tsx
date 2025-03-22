@@ -96,7 +96,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       const option = pricingData.additionalOptions[returnType].find(opt => opt.id === optionId);
       if (!option) continue;
       
-      if (option.isCounter && optionCounters[optionId]) {
+      if ((option as PricingOption).isCounter && optionCounters[optionId]) {
         // For rental properties, calculate based on first year/returning status and new/existing properties
         if (option.id === "rental") {
           if (isFirstYear) {
@@ -110,7 +110,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
           }
         } else {
           // For other counter options, use standard pricing
-          additionalCosts += (option.counterPrice || option.price) * optionCounters[optionId];
+          additionalCosts += ((option as PricingOption).counterPrice || option.price) * optionCounters[optionId];
         }
       } else {
         // For regular options, just add the price
@@ -142,17 +142,17 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       newOptions = [...selectedOptions, optionId];
       
       // Initialize counter if this is a counter option
-      if (option?.isCounter) {
+      if (option && (option as PricingOption).isCounter) {
         setOptionCounters(prev => ({
           ...prev,
-          [optionId]: option.counterInitialValue || 1
+          [optionId]: (option as PricingOption).counterInitialValue || 1
         }));
       }
     } else {
       newOptions = selectedOptions.filter(id => id !== optionId);
       
       // Remove counter if unchecking a counter option
-      if (option?.isCounter) {
+      if (option && (option as PricingOption).isCounter) {
         setOptionCounters(prev => {
           const newCounters = { ...prev };
           delete newCounters[optionId];
@@ -352,12 +352,12 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                           <div className="text-sm text-muted-foreground">{option.description}</div>
                         )}
                       </Label>
-                      {option.isCounter ? (
+                      {(option as PricingOption).isCounter ? (
                         <div className="text-right font-medium">
                           {option.id === "rental" ? (
                             <>+${(isFirstYear ? 90 : 45) * (optionCounters[option.id] || 1)}</>
                           ) : (
-                            <>+${(option.counterPrice || option.price) * (optionCounters[option.id] || 1)}</>
+                            <>+${((option as PricingOption).counterPrice || option.price) * (optionCounters[option.id] || 1)}</>
                           )}
                         </div>
                       ) : (
@@ -366,7 +366,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                     </div>
                     
                     {/* Counter interface for rental properties or other counted items */}
-                    {option.isCounter && selectedOptions.includes(option.id) && (
+                    {(option as PricingOption).isCounter && selectedOptions.includes(option.id) && (
                       <div className="mt-4 pl-9">
                         {option.id === "rental" ? (
                           <div>
@@ -375,8 +375,8 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                           </div>
                         ) : (
                           <div className="flex items-center space-x-3">
-                            {option.counterLabel && (
-                              <Label className="text-sm">{option.counterLabel}</Label>
+                            {(option as PricingOption).counterLabel && (
+                              <Label className="text-sm">{(option as PricingOption).counterLabel}</Label>
                             )}
                             <div className="flex items-center border rounded-md">
                               <Button
@@ -406,7 +406,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                               </Button>
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              ${option.counterPrice || option.price} {option.counterDescription}
+                              ${(option as PricingOption).counterPrice || option.price} {(option as PricingOption).counterDescription}
                             </div>
                           </div>
                         )}
@@ -575,7 +575,7 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                         return (
                           <div key={optionId} className="flex justify-between">
                             <span>{option.label}:</span>
-                            <span>+${option.isCounter ? (option.counterPrice || option.price) * (optionCounters[optionId] || 1) : option.price}</span>
+                            <span>+${(option as PricingOption).isCounter ? ((option as PricingOption).counterPrice || option.price) * (optionCounters[optionId] || 1) : option.price}</span>
                           </div>
                         );
                       })}
