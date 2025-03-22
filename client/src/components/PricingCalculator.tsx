@@ -37,7 +37,17 @@ const pricingData = {
   additionalOptions: {
     individual: [
       { id: "itemized", label: "Itemized Deductions", price: 45, description: "Schedule A deductions" },
-      { id: "self-employment", label: "Self-Employment", price: 45, description: "Schedule C for sole proprietors" },
+      { 
+        id: "self-employment", 
+        label: "Self-Employment", 
+        price: 45, 
+        description: "Schedule C for sole proprietors",
+        isCounter: true,
+        counterLabel: "How many different self-employed businesses do you run?",
+        counterPrice: 45,
+        counterDescription: "per business",
+        counterInitialValue: 1
+      },
       { 
         id: "rental", 
         label: "Rental Properties ($45-$90)", 
