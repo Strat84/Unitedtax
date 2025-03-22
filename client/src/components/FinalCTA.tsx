@@ -16,8 +16,8 @@ export default function FinalCTA({ onStartTaxes }: FinalCTAProps) {
           and money with UnitedTax.AI.
         </p>
         <Button
-          size="xl"
-          className="bg-white text-primary-dark hover:bg-primary-50 border-2 border-primary-light shadow-md"
+          size="lg"
+          className="bg-white text-primary-dark hover:bg-primary-50 border-2 border-primary-light shadow-md text-lg py-6"
           onClick={onStartTaxes}
         >
           Start My Taxes Today

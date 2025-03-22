@@ -43,7 +43,7 @@ export default function HeroSection({
           </div>
           <div className="lg:w-1/2">
             <img
-              src="/images/hero-image.png"
+              src="/hero-image.png"
               alt="Business professional using UnitedTax.AI service"
               className="rounded-lg shadow-lg w-full object-cover"
             />
