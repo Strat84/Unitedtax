@@ -8,45 +8,35 @@ interface PricingProps {
 export default function Pricing({ onSelectPlan }: PricingProps) {
   const pricingTiers = [
     {
-      name: "Freelancer",
-      description: "For independent contractors & simple business structures",
-      price: "$299",
+      name: "Personal",
+      description: "For individuals & freelancers with single income sources",
+      price: "$250",
       features: [
-        "Personal return + Schedule C",
-        "1099-NEC/MISC processing",
-        "Business expense deductions",
-        "Home office deductions",
+        "Federal & state filing",
+        "W-2 income reporting",
+        "Basic investment income",
+        "Standard deductions",
+        "Digital document storage",
+        "24/7 AI tax assistant",
       ],
-      unavailable: ["Entity tax return filing"],
+      unavailable: ["Business entity filing"],
       popular: false,
     },
     {
-      name: "Business Owner",
-      description: "For LLCs, S-Corps, and growing businesses",
-      price: "$599",
+      name: "Business",
+      description: "For business owners, LLCs, S-Corps & multi-income sources",
+      price: "$550",
       features: [
-        "Personal + Entity return",
-        "1 State filing included",
-        "Business expense optimization",
+        "All Personal features",
+        "Business entity returns",
+        "Income & expense categorization",
+        "Tax deduction optimization",
         "Quarterly tax planning",
-        "1 hour tax consultation",
+        "Year-round tax support",
+        "Priority expert review",
       ],
       unavailable: [],
       popular: true,
-    },
-    {
-      name: "Premium",
-      description: "For complex situations with multiple income sources",
-      price: "$999",
-      features: [
-        "All Business Owner features",
-        "Multi-state filings (up to 3)",
-        "Rental property tax optimization",
-        "RSU & stock option planning",
-        "Year-round tax support",
-      ],
-      unavailable: [],
-      popular: false,
     },
   ];
 
@@ -62,7 +52,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
