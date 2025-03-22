@@ -40,15 +40,15 @@ const pricingData = {
       { id: "self-employment", label: "Self-Employment", price: 45, description: "Schedule C for sole proprietors" },
       { 
         id: "rental", 
-        label: "Rental Properties", 
+        label: "Rental Properties ($45-$90)", 
         price: 45, 
         description: "Schedule E rental properties",
         isCounter: true,
         counterLabel: "Number of Rental Properties",
         counterPrice: 45, // Base price, will be adjusted to 90 for first year clients
-        counterDescription: "Cost per property",
+        counterDescription: "per property",
         counterInitialValue: 1,
-        counterFirstYearNote: "Note: First year clients have an additional $45 per property added for creating the depreciation schedule."
+        counterFirstYearNote: "First year properties have an additional $45 per property fee for creating depreciation schedules."
       },
       { id: "capital-gains", label: "Capital Gains", price: 25, description: "Schedule D for investment sales" },
       { id: "property-sale", label: "Sale of Property or 1031 Exchange", price: 50, description: "Real estate transactions" },
@@ -80,6 +80,8 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [optionCounters, setOptionCounters] = useState<Record<string, number>>({});
   const [isFirstYear, setIsFirstYear] = useState<boolean>(true);
+  const [newRentalCount, setNewRentalCount] = useState<number>(0);
+  const [existingRentalCount, setExistingRentalCount] = useState<number>(0);
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
 
   // Calculate the price based on selections
@@ -95,10 +97,17 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       if (!option) continue;
       
       if (option.isCounter && optionCounters[optionId]) {
-        // For rental properties, adjust price based on first year status
+        // For rental properties, calculate based on first year/returning status and new/existing properties
         if (option.id === "rental") {
-          const pricePerProperty = isFirstYear ? 90 : 45; // $90 for first year, $45 for returning clients
-          additionalCosts += pricePerProperty * optionCounters[optionId];
+          if (isFirstYear) {
+            // First year client - all properties are $90
+            additionalCosts += 90 * optionCounters[optionId];
+          } else {
+            // Returning client - existing properties $45, new properties $90
+            const existingPropertiesCost = 45 * existingRentalCount;
+            const newPropertiesCost = 90 * newRentalCount;
+            additionalCosts += (existingPropertiesCost + newPropertiesCost);
+          }
         } else {
           // For other counter options, use standard pricing
           additionalCosts += (option.counterPrice || option.price) * optionCounters[optionId];
@@ -170,6 +179,29 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
       [optionId]: adjustedValue
     }));
     
+    // For rental properties, we need to update the specific counts
+    if (optionId === "rental") {
+      if (isFirstYear) {
+        // For first year clients, we just need the total count
+        setNewRentalCount(0);
+        setExistingRentalCount(0);
+      } else {
+        // For returning clients, adjust existing/new counts as needed
+        const currentTotal = existingRentalCount + newRentalCount;
+        if (adjustedValue > currentTotal) {
+          // If increasing, add to existing properties
+          setExistingRentalCount(existingRentalCount + (adjustedValue - currentTotal));
+        } else if (adjustedValue < currentTotal) {
+          // If decreasing, remove from new properties first, then existing
+          const newDiff = Math.min(newRentalCount, currentTotal - adjustedValue);
+          const remainingDiff = (currentTotal - adjustedValue) - newDiff;
+          
+          setNewRentalCount(Math.max(0, newRentalCount - newDiff));
+          setExistingRentalCount(Math.max(0, existingRentalCount - remainingDiff));
+        }
+      }
+    }
+    
     // Recalculate price
     setTimeout(() => {
       const newPrice = calculatePrice();
@@ -181,7 +213,60 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
   const handleFirstYearChange = (checked: boolean) => {
     setIsFirstYear(checked);
     
+    if (checked) {
+      // If first year client is selected, we adjust the counter
+      // to be the total number of properties
+      const totalProperties = optionCounters["rental"] || 1;
+      setNewRentalCount(0);
+      setExistingRentalCount(0);
+    } else {
+      // If returning client is selected, initialize existing vs new properties
+      const totalProperties = optionCounters["rental"] || 1;
+      setExistingRentalCount(totalProperties);
+      setNewRentalCount(0);
+    }
+    
     // Recalculate price whenever this changes
+    setTimeout(() => {
+      const newPrice = calculatePrice();
+      setEstimatedPrice(newPrice);
+    }, 0);
+  };
+  
+  // Handle existing rental count change
+  const handleExistingRentalChange = (count: number) => {
+    // Ensure we don't go below 0
+    const newCount = Math.max(0, count);
+    setExistingRentalCount(newCount);
+    
+    // Update total rental count in optionCounters
+    const totalProperties = newCount + newRentalCount;
+    setOptionCounters(prev => ({
+      ...prev,
+      "rental": Math.max(1, totalProperties)
+    }));
+    
+    // Recalculate price
+    setTimeout(() => {
+      const newPrice = calculatePrice();
+      setEstimatedPrice(newPrice);
+    }, 0);
+  };
+  
+  // Handle new rental count change
+  const handleNewRentalChange = (count: number) => {
+    // Ensure we don't go below 0
+    const newCount = Math.max(0, count);
+    setNewRentalCount(newCount);
+    
+    // Update total rental count in optionCounters
+    const totalProperties = existingRentalCount + newCount;
+    setOptionCounters(prev => ({
+      ...prev,
+      "rental": Math.max(1, totalProperties)
+    }));
+    
+    // Recalculate price
     setTimeout(() => {
       const newPrice = calculatePrice();
       setEstimatedPrice(newPrice);
@@ -194,6 +279,8 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
     setSelectedOptions([]);
     setOptionCounters({});
     setIsFirstYear(true);
+    setNewRentalCount(0);
+    setExistingRentalCount(0);
     setEstimatedPrice(null);
   };
 
@@ -281,56 +368,50 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                     {/* Counter interface for rental properties or other counted items */}
                     {option.isCounter && selectedOptions.includes(option.id) && (
                       <div className="mt-4 pl-9">
-                        <div className="flex items-center space-x-3">
-                          {option.counterLabel && (
-                            <Label className="text-sm">{option.counterLabel}</Label>
-                          )}
-                          <div className="flex items-center border rounded-md">
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0"
-                              onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) - 1)}
-                            >
-                              <Minus className="h-4 w-4" />
-                            </Button>
-                            <Input
-                              type="number"
-                              min="1"
-                              value={optionCounters[option.id] || 1}
-                              onChange={(e) => handleCounterChange(option.id, parseInt(e.target.value) || 1)}
-                              className="h-8 w-16 text-center border-0"
-                            />
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0"
-                              onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) + 1)}
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
+                        {option.id === "rental" ? (
+                          <div>
+                            <p className="text-sm font-medium mb-2">Total Rental Properties: {optionCounters[option.id] || 1}</p>
+                            <p className="text-sm mb-1">Click below to provide details about your rental properties:</p>
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            {option.id === "rental" ? (
-                              <>
-                                ${isFirstYear ? 90 : 45} {option.counterDescription}
-                                {isFirstYear && (
-                                  <span className="ml-1 text-amber-600">
-                                    (includes $45 depreciation setup)
-                                  </span>
-                                )}
-                              </>
-                            ) : (
-                              <>
-                                ${option.counterPrice || option.price} {option.counterDescription}
-                              </>
+                        ) : (
+                          <div className="flex items-center space-x-3">
+                            {option.counterLabel && (
+                              <Label className="text-sm">{option.counterLabel}</Label>
                             )}
+                            <div className="flex items-center border rounded-md">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                                onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) - 1)}
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <Input
+                                type="number"
+                                min="1"
+                                value={optionCounters[option.id] || 1}
+                                onChange={(e) => handleCounterChange(option.id, parseInt(e.target.value) || 1)}
+                                className="h-8 w-16 text-center border-0"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                                onClick={() => handleCounterChange(option.id, (optionCounters[option.id] || 1) + 1)}
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              ${option.counterPrice || option.price} {option.counterDescription}
+                            </div>
                           </div>
-                        </div>
+                        )}
                         
-                        {/* First year toggle for rental properties */}
+                        {/* First year toggle and property counters for rental properties */}
                         {option.id === "rental" && (
                           <div className="mt-4 border-t pt-4">
                             <div className="flex items-center space-x-3">
@@ -340,17 +421,98 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                                 onCheckedChange={(checked) => handleFirstYearChange(checked === true)}
                               />
                               <Label htmlFor="first-year-rental" className="flex-1 cursor-pointer">
-                                <div className="font-medium">First-year customer or new rental property</div>
+                                <div className="font-medium">First-year customer</div>
                                 <div className="text-sm text-muted-foreground">
-                                  First-time properties require a $45 fee for creating depreciation schedules
+                                  Check this if this is your first tax return with us
                                 </div>
                               </Label>
                             </div>
-                            <div className="mt-2 text-sm text-amber-600 bg-amber-50 p-2 rounded">
-                              {isFirstYear 
-                                ? "New rental properties require a $45 setup fee for creating depreciation schedules, for a total of $90 per property." 
-                                : "Returning clients with existing depreciation schedules pay $45 per rental property."}
-                            </div>
+                            
+                            {isFirstYear ? (
+                              // First year client interface - all properties are $90
+                              <div className="mt-3 p-3 border rounded-md bg-slate-50">
+                                <p className="text-sm font-medium mb-2">Each rental property is $90 for first-year clients</p>
+                                <div className="text-sm text-amber-600 bg-amber-50 p-2 rounded mb-3">
+                                  First-year clients pay $90 per property ($45 base + $45 depreciation schedule setup). 
+                                  Your cost will drop to $45 per property next year.
+                                </div>
+                              </div>
+                            ) : (
+                              // Returning client interface - separate existing and new properties
+                              <div className="mt-3 p-3 border rounded-md bg-slate-50">
+                                <div className="mb-3">
+                                  <p className="text-sm font-medium mb-2">Existing Properties ($45 each)</p>
+                                  <div className="flex items-center space-x-3">
+                                    <Label className="text-sm">Number of existing properties:</Label>
+                                    <div className="flex items-center border rounded-md">
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleExistingRentalChange(existingRentalCount - 1)}
+                                      >
+                                        <Minus className="h-4 w-4" />
+                                      </Button>
+                                      <Input
+                                        type="number"
+                                        min="0"
+                                        value={existingRentalCount}
+                                        onChange={(e) => handleExistingRentalChange(parseInt(e.target.value) || 0)}
+                                        className="h-8 w-16 text-center border-0"
+                                      />
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleExistingRentalChange(existingRentalCount + 1)}
+                                      >
+                                        <Plus className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div className="mb-2">
+                                  <p className="text-sm font-medium mb-2">New Properties ($90 each)</p>
+                                  <div className="flex items-center space-x-3">
+                                    <Label className="text-sm">Number of new properties:</Label>
+                                    <div className="flex items-center border rounded-md">
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleNewRentalChange(newRentalCount - 1)}
+                                      >
+                                        <Minus className="h-4 w-4" />
+                                      </Button>
+                                      <Input
+                                        type="number"
+                                        min="0"
+                                        value={newRentalCount}
+                                        onChange={(e) => handleNewRentalChange(parseInt(e.target.value) || 0)}
+                                        className="h-8 w-16 text-center border-0"
+                                      />
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleNewRentalChange(newRentalCount + 1)}
+                                      >
+                                        <Plus className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div className="text-sm text-amber-600 bg-amber-50 p-2 rounded">
+                                  New properties require a $45 setup fee for depreciation schedules, for a total of $90 per new property.
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -366,7 +528,68 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
             <div className="mt-8 text-center">
               <h3 className="text-lg font-semibold mb-2">Your Estimated Price</h3>
               <div className="text-4xl font-bold text-primary">${estimatedPrice}</div>
-              <p className="mt-2 text-sm text-muted-foreground">
+              
+              {/* Show detailed breakdown for rental properties */}
+              {returnType && selectedOptions.includes("rental") && (
+                <div className="mt-4 mx-auto max-w-md text-left bg-slate-50 p-3 rounded-md border">
+                  <h4 className="font-medium text-center mb-2">Price Breakdown</h4>
+                  <div className="space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span>Base {returnType} return:</span>
+                      <span>${pricingData.basePrice[returnType]}</span>
+                    </div>
+                    
+                    {/* Rental property breakdown */}
+                    <div className="pt-1">
+                      <div className="font-medium">Rental Properties:</div>
+                      {isFirstYear ? (
+                        <div className="flex justify-between pl-2">
+                          <span>{optionCounters["rental"] || 1} properties × $90:</span>
+                          <span>+${(optionCounters["rental"] || 1) * 90}</span>
+                        </div>
+                      ) : (
+                        <>
+                          {existingRentalCount > 0 && (
+                            <div className="flex justify-between pl-2">
+                              <span>{existingRentalCount} existing properties × $45:</span>
+                              <span>+${existingRentalCount * 45}</span>
+                            </div>
+                          )}
+                          {newRentalCount > 0 && (
+                            <div className="flex justify-between pl-2">
+                              <span>{newRentalCount} new properties × $90:</span>
+                              <span>+${newRentalCount * 90}</span>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    
+                    {/* Other selected options */}
+                    {selectedOptions
+                      .filter(id => id !== "rental")
+                      .map(optionId => {
+                        const option = pricingData.additionalOptions[returnType].find(opt => opt.id === optionId);
+                        if (!option) return null;
+                        
+                        return (
+                          <div key={optionId} className="flex justify-between">
+                            <span>{option.label}:</span>
+                            <span>+${option.isCounter ? (option.counterPrice || option.price) * (optionCounters[optionId] || 1) : option.price}</span>
+                          </div>
+                        );
+                      })}
+                    
+                    {/* Total line with border */}
+                    <div className="flex justify-between font-medium pt-2 mt-1 border-t">
+                      <span>Total Estimated Price:</span>
+                      <span>${estimatedPrice}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              <p className="mt-3 text-sm text-muted-foreground">
                 This is an estimate. Final price may vary based on the complexity of your specific situation.
               </p>
             </div>
