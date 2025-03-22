@@ -6,7 +6,13 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-bold text-white mb-4">UnitedTax.AI</h3>
+            <div className="mb-4 bg-white inline-block p-2 rounded">
+              <img 
+                src="/images/united-tax-logo.png" 
+                alt="UnitedTax.AI Logo" 
+                className="h-10" 
+              />
+            </div>
             <p className="mb-4">
               AI-powered tax preparation for modern businesses and
               professionals.
