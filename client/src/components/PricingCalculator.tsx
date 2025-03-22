@@ -431,7 +431,39 @@ export default function PricingCalculator({ open, onOpenChange }: PricingCalcula
                             {isFirstYear ? (
                               // First year client interface - all properties are $90
                               <div className="mt-3 p-3 border rounded-md bg-slate-50">
-                                <p className="text-sm font-medium mb-2">Each rental property is $90 for first-year clients</p>
+                                <div className="mb-3">
+                                  <p className="text-sm font-medium mb-2">First-Year Properties ($90 each)</p>
+                                  <div className="flex items-center space-x-3">
+                                    <Label className="text-sm">Number of properties:</Label>
+                                    <div className="flex items-center border rounded-md">
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleCounterChange("rental", Math.max(1, (optionCounters["rental"] || 1) - 1))}
+                                      >
+                                        <Minus className="h-4 w-4" />
+                                      </Button>
+                                      <Input
+                                        type="number"
+                                        min="1"
+                                        value={optionCounters["rental"] || 1}
+                                        onChange={(e) => handleCounterChange("rental", parseInt(e.target.value) || 1)}
+                                        className="h-8 w-16 text-center border-0"
+                                      />
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleCounterChange("rental", (optionCounters["rental"] || 1) + 1)}
+                                      >
+                                        <Plus className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div className="text-sm text-amber-600 bg-amber-50 p-2 rounded mb-3">
                                   First-year clients pay $90 per property ($45 base + $45 depreciation schedule setup). 
                                   Your cost will drop to $45 per property next year.
