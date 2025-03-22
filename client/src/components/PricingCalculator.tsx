@@ -60,6 +60,18 @@ const pricingData = {
         counterInitialValue: 1,
         counterFirstYearNote: "First year properties have an additional $45 per property fee for creating depreciation schedules."
       },
+      { 
+        id: "k1-individual", 
+        label: "Received a K-1", 
+        price: 45, 
+        description: "K-1 from partnerships, S-corporations, or trusts",
+        isCounter: true,
+        counterLabel: "How many K-1s did you receive?",
+        counterPrice: 45,
+        counterDescription: "per K-1",
+        counterInitialValue: 1,
+        counterFirstYearNote: "Note: The $45 fee does not apply if we prepared the business tax return that generated the K-1."
+      },
       { id: "capital-gains", label: "Capital Gains", price: 25, description: "Schedule D for investment sales" },
       { id: "property-sale", label: "Sale of Property or 1031 Exchange", price: 50, description: "Real estate transactions" },
       { id: "home-office", label: "Home Office", price: 25, description: "Home office deduction" },
