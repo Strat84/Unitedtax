@@ -19,9 +19,9 @@ export default function HeroSection({
               <span className="text-primary">Without the Premium Price</span>
             </h1>
             <p className="text-lg text-neutral-600 max-w-2xl">
-              We combine AI technology with real tax professionals to deliver a
-              faster, more accurate, and affordable tax filing experience
-              designed for modern businesses and professionals.
+              Experience smarter tax filing. We paired real experienced tax pros with powerful AI technology 
+              to give modern businesses and professionals faster turnaround times, greater accuracy, and lower costs—without 
+              sacrificing expert support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button 
