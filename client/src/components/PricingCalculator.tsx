@@ -32,7 +32,7 @@ interface PricingOption {
 const pricingData = {
   basePrice: {
     individual: 250, // Federal + State of Residence
-    business: 499,   // Placeholder until we get business pricing details
+    business: 550,   // Business tax return base price
   },
   additionalOptions: {
     individual: [
@@ -58,16 +58,6 @@ const pricingData = {
       { id: "foreign", label: "Foreign Income or Account", price: 100, description: "International income or accounts" },
     ],
     business: [
-      // Business entity types
-      { id: "llc", label: "Single-Member LLC", price: 100, description: "Simple pass-through LLC" },
-      { id: "partnership", label: "Partnership", price: 200, description: "Partnership tax filing" },
-      { id: "s-corp", label: "S-Corporation", price: 300, description: "S-Corporation tax filing" },
-      { id: "c-corp", label: "C-Corporation", price: 400, description: "C-Corporation tax filing" },
-      
-      // Business complexity factors
-      { id: "employees", label: "Employees (1-10)", price: 150, description: "Business with 1-10 employees" },
-      { id: "many-employees", label: "Employees (11+)", price: 250, description: "Business with 11+ employees" },
-      { id: "inventory", label: "Inventory Tracking", price: 150, description: "Business with inventory" },
       
       // Additional cost items
       { 
