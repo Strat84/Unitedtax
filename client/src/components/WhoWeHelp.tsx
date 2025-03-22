@@ -20,8 +20,8 @@ export default function WhoWeHelp() {
       description:
         "Tax solutions for self-employed professionals with 1099 income and business expenses.",
       features: ["Quarterly tax planning", "Home office deduction assistance"],
-      image: "https://placehold.co/400x400/25638b/FFFFFF/png?text=Freelancer",
-      alt: "Freelancer"
+      image: "/images/freelancer.png",
+      alt: "Freelancer working on laptop in coffee shop"
     },
     {
       icon: <Home className="h-8 w-8" />,
