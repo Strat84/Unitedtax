@@ -58,14 +58,61 @@ const pricingData = {
       { id: "foreign", label: "Foreign Income or Account", price: 100, description: "International income or accounts" },
     ],
     business: [
+      // Business entity types
       { id: "llc", label: "Single-Member LLC", price: 100, description: "Simple pass-through LLC" },
       { id: "partnership", label: "Partnership", price: 200, description: "Partnership tax filing" },
       { id: "s-corp", label: "S-Corporation", price: 300, description: "S-Corporation tax filing" },
       { id: "c-corp", label: "C-Corporation", price: 400, description: "C-Corporation tax filing" },
+      
+      // Business complexity factors
       { id: "employees", label: "Employees (1-10)", price: 150, description: "Business with 1-10 employees" },
       { id: "many-employees", label: "Employees (11+)", price: 250, description: "Business with 11+ employees" },
-      { id: "multi-state", label: "Multi-State Operations", price: 200, description: "Business operates in multiple states" },
       { id: "inventory", label: "Inventory Tracking", price: 150, description: "Business with inventory" },
+      
+      // Additional cost items
+      { 
+        id: "asset-depreciation", 
+        label: "Asset Depreciation Schedule", 
+        price: 45, 
+        description: "Depreciation for business assets and properties",
+        isCounter: true,
+        counterLabel: "Number of Assets/Properties",
+        counterPrice: 45,
+        counterDescription: "per asset/property",
+        counterInitialValue: 1,
+      },
+      { 
+        id: "k1", 
+        label: "Multiple Shareholder K-1", 
+        price: 25, 
+        description: "Fee for each K-1 after the first",
+        isCounter: true,
+        counterLabel: "Number of Additional K-1s",
+        counterPrice: 25,
+        counterDescription: "per K-1 after the first",
+        counterInitialValue: 1,
+      },
+      { id: "business-assets-sale", label: "Sale of Business Assets", price: 100, description: "Processing sale of business assets" },
+      { 
+        id: "multi-state", 
+        label: "Multiple State Filings", 
+        price: 45, 
+        description: "Per additional state filing",
+        isCounter: true,
+        counterLabel: "Number of Additional States",
+        counterPrice: 45,
+        counterDescription: "per additional state",
+        counterInitialValue: 1,
+      },
+      { id: "revisions", label: "Revisions Due To Missing Information", price: 50, description: "Fee for processing missing information after initial submission" },
+      { id: "foreign", label: "Foreign Income or Account", price: 100, description: "International income or accounts" },
+      { 
+        id: "bookkeeping", 
+        label: "Cleanup Bookkeeping", 
+        price: 250, 
+        description: "Starting fee for bookkeeping cleanup services",
+        isCounter: false,
+      },
     ],
   },
 };
