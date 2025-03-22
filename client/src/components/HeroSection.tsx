@@ -10,7 +10,7 @@ export default function HeroSection({
   onSeePricing,
 }: HeroSectionProps) {
   return (
-    <section className="bg-gradient-to-b from-neutral-50 to-white pt-16 pb-16">
+    <section className="bg-gradient-to-b from-neutral-50 to-white pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
           <div className="lg:w-1/2 space-y-6">
@@ -51,7 +51,7 @@ export default function HeroSection({
         </div>
         
         {/* Trustpilot logo with link */}
-        <div className="mt-10 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <a 
             href="https://www.trustpilot.com/review/unitedtax.ai" 
             target="_blank" 
@@ -62,7 +62,7 @@ export default function HeroSection({
             <img 
               src="/images/trustpilot-logo.png" 
               alt="Rated 5 stars on Trustpilot" 
-              className="h-16 sm:h-20" 
+              className="h-14 sm:h-16" 
             />
           </a>
         </div>
