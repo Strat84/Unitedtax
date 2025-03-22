@@ -56,9 +56,9 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden ${
+              className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden h-full ${
                 tier.popular
-                  ? "border-primary border relative transform scale-105"
+                  ? "border-primary border-2 relative"
                   : "border border-neutral-200"
               }`}
             >
@@ -67,7 +67,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                   Most Popular
                 </div>
               )}
-              <div className={`p-8 ${tier.popular ? "pt-10" : ""}`}>
+              <div className={`p-8 ${tier.popular ? "pt-10" : ""} flex flex-col h-full`}>
                 <h3 className="text-xl font-semibold mb-2 text-neutral-900">
                   {tier.name}
                 </h3>
@@ -76,7 +76,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                   <span className="text-4xl font-bold text-neutral-900">
                     {tier.price}
                   </span>
-                  <span className="text-neutral-500">/year</span>
+                  <span className="text-neutral-500">/base price</span>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {tier.features.map((feature, idx) => (
@@ -93,10 +93,10 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                   ))}
                 </ul>
                 <Button
-                  className="w-full"
+                  className="w-full mt-auto"
                   onClick={() => onSelectPlan(tier.name)}
                 >
-                  Select Plan
+                  Start My Taxes
                 </Button>
               </div>
             </div>
