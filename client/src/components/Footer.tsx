@@ -14,7 +14,7 @@ export default function Footer() {
               />
             </div>
             <p className="mb-4">
-              AI-powered tax preparation for modern businesses and
+              Professional tax preparation for modern businesses and
               professionals.
             </p>
             <div className="flex space-x-4">
