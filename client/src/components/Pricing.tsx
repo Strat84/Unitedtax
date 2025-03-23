@@ -36,7 +36,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
         "Priority expert review",
       ],
       unavailable: [],
-      popular: true,
+      popular: false,
     },
   ];
 
