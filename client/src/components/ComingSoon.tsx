@@ -31,7 +31,7 @@ export default function ComingSoon() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-2">Coming Soon</h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
-            We're expanding our AI-powered financial tools suite
+            We're developing software and apps for your complete financial ecosystem.
           </p>
         </div>
 
