@@ -26,7 +26,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-neutral-900">How It Works</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-2">How It Works</h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
             Our AI-powered tax preparation system simplifies the entire process,
             saving you time and money.

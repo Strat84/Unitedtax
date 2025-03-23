@@ -44,7 +44,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
     <section id="pricing" className="py-20 bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-neutral-900">
+          <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-2">
             Transparent Pricing
           </h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
