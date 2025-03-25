@@ -29,8 +29,8 @@ export default function WhoWeHelp() {
       description:
         "Expert tax handling for rental properties, depreciation, and property-related deductions.",
       features: ["Depreciation optimization", "1031 exchange guidance"],
-      image: "https://placehold.co/400x400/25638b/FFFFFF/png?text=Real+Estate",
-      alt: "Real estate investor"
+      image: "/images/real-estate-investor.png",
+      alt: "Real estate investor in property"
     },
     {
       icon: <TrendingUp className="h-8 w-8" />,
