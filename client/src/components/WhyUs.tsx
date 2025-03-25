@@ -29,7 +29,7 @@ export default function WhyUs() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-2">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#25638b] mb-2">
               Why Choose UnitedTax.AI?
             </h2>
             <p className="text-lg text-neutral-600">
