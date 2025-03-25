@@ -29,7 +29,7 @@ export default function ComingSoon() {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-2">Coming Soon</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#47a9c7] to-[#25638b]">Coming Soon</h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
             We do more than just tax prep. We're developing software and apps for your complete financial ecosystem.
           </p>
