@@ -15,15 +15,6 @@ export default function WhoWeHelp() {
       alt: "Female entrepreneur in a vineyard"
     },
     {
-      icon: <Laptop className="h-8 w-8" />,
-      title: "Freelancers & Contractors",
-      description:
-        "Tax solutions for self-employed professionals with 1099 income and business expenses.",
-      features: ["Quarterly tax planning", "Home office deduction assistance"],
-      image: "/images/freelancer.png",
-      alt: "Freelancer working on laptop in coffee shop"
-    },
-    {
       icon: <Home className="h-8 w-8" />,
       title: "Real Estate Investors",
       description:
@@ -31,6 +22,15 @@ export default function WhoWeHelp() {
       features: ["Depreciation optimization", "1031 exchange guidance"],
       image: "/images/real-estate-investor.png",
       alt: "Real estate investor in property"
+    },
+    {
+      icon: <Laptop className="h-8 w-8" />,
+      title: "Freelancers & Contractors",
+      description:
+        "Tax solutions for self-employed professionals with 1099 income and business expenses.",
+      features: ["Quarterly tax planning", "Home office deduction assistance"],
+      image: "/images/freelancer.png",
+      alt: "Freelancer working on laptop in coffee shop"
     },
     {
       icon: <TrendingUp className="h-8 w-8" />,
