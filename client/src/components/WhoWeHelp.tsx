@@ -38,8 +38,8 @@ export default function WhoWeHelp() {
       description:
         "Specialized tax handling for tech professionals with complex equity compensation.",
       features: ["Multi-state tax filing", "RSU vesting tax strategy"],
-      image: "https://placehold.co/400x400/25638b/FFFFFF/png?text=Tech+Employee",
-      alt: "Tech employee"
+      image: "/images/tech-employee.png",
+      alt: "Tech employee with RSUs"
     },
   ];
 
