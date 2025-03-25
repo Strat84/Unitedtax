@@ -24,15 +24,6 @@ export default function WhoWeHelp() {
       alt: "Real estate investor in property"
     },
     {
-      icon: <Laptop className="h-8 w-8" />,
-      title: "Freelancers & Contractors",
-      description:
-        "Tax solutions for self-employed professionals with 1099 income and business expenses.",
-      features: ["Quarterly tax planning", "Home office deduction assistance"],
-      image: "/images/freelancer.png",
-      alt: "Freelancer working on laptop in coffee shop"
-    },
-    {
       icon: <TrendingUp className="h-8 w-8" />,
       title: "Tech Employees with RSUs",
       description:
@@ -40,6 +31,15 @@ export default function WhoWeHelp() {
       features: ["Multi-state tax filing", "RSU vesting tax strategy"],
       image: "/images/tech-employee.png",
       alt: "Tech employee with RSUs"
+    },
+    {
+      icon: <Laptop className="h-8 w-8" />,
+      title: "Freelancers & Contractors",
+      description:
+        "Tax solutions for self-employed professionals with 1099 income and business expenses.",
+      features: ["Quarterly tax planning", "Home office deduction assistance"],
+      image: "/images/freelancer.png",
+      alt: "Freelancer working on laptop in coffee shop"
     },
   ];
 
