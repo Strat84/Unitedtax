@@ -14,7 +14,7 @@ export default function HeroSection({
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
           <div className="lg:w-1/2 space-y-6">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-neutral-900">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-[#25638b]">
               Professional Tax Preparation{" "}
               <span className="text-primary">Without the Premium Price</span>
             </h1>

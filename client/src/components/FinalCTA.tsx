@@ -8,7 +8,7 @@ export default function FinalCTA({ onStartTaxes }: FinalCTAProps) {
   return (
     <section className="py-20 bg-gradient-to-r from-primary-700 to-teal-700 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
           Manage Your Taxes Smarter Today
         </h2>
         <p className="text-lg mb-8 max-w-2xl mx-auto text-primary-100">
