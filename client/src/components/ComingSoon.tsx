@@ -30,8 +30,8 @@ export default function ComingSoon() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="mb-16">
-            <div className="overflow-visible">
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-normal pt-1 pb-1 bg-clip-text text-transparent bg-gradient-to-r from-[#74dcff] via-[#47a9c7] to-[#154060]">Coming Soon</h2>
+            <div className="overflow-visible py-4">
+              <h2 className="text-4xl md:text-5xl font-bold leading-relaxed tracking-normal pt-2 pb-4 my-2 text-[#47a9c7]">Coming Soon</h2>
             </div>
           </div>
           <div className="mt-6">
