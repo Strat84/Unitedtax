@@ -70,19 +70,9 @@ export default function Footer() {
             <h4 className="text-white font-medium mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  About Us
-                </a>
-              </li>
-              <li>
                 <Link href="/careers" className="hover:text-white transition-colors">
                   Careers
                 </Link>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Blog
-                </a>
               </li>
               <li>
                 <Link href="/press" className="hover:text-white transition-colors">
