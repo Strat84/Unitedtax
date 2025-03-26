@@ -26,7 +26,7 @@ export default function ComingSoon() {
   ];
 
   return (
-    <section className="pt-20 pb-16 bg-white">
+    <section className="pt-20 pb-5 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="mb-16">
