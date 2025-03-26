@@ -37,7 +37,7 @@ export default function HeroSection({
                 className="border-primary-dark text-primary-dark hover:bg-primary-50"
                 onClick={onSeePricing}
               >
-                See Pricing
+                See My Price
               </Button>
             </div>
           </div>

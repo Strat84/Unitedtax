@@ -45,7 +45,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-[#25638b] mb-2">
-            Transparent Pricing
+            My Price
           </h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
             Flat-rate pricing with no hidden fees or surprises
@@ -82,7 +82,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                       onClick={() => onSelectPlan(tier.name)} 
                       className="text-primary hover:underline text-sm font-medium"
                     >
-                      Calculate My Price
+                      See My Price
                     </button>
                   </div>
                 </div>
