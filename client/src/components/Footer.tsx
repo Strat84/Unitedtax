@@ -53,16 +53,6 @@ export default function Footer() {
                   Individual Tax Filing
                 </a>
               </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Tax Planning
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Advisory Services
-                </a>
-              </li>
             </ul>
           </div>
 
