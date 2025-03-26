@@ -6,7 +6,7 @@ interface FinalCTAProps {
 
 export default function FinalCTA({ onStartTaxes }: FinalCTAProps) {
   return (
-    <section className="pt-8 pb-10 bg-gradient-to-r from-primary-700 to-teal-700 text-white">
+    <section className="pt-2 pb-10 bg-gradient-to-r from-primary-700 to-teal-700 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
           Manage Your Taxes Smarter Today
