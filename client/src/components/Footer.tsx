@@ -85,9 +85,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link href="/press" className="hover:text-white transition-colors">
                   Press
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
