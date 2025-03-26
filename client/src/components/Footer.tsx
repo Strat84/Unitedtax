@@ -44,12 +44,12 @@ export default function Footer() {
             <h4 className="text-white font-medium mb-4">Services</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a href="/#pricing" className="hover:text-white transition-colors">
                   Business Tax Prep
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a href="/#pricing" className="hover:text-white transition-colors">
                   Individual Tax Filing
                 </a>
               </li>
