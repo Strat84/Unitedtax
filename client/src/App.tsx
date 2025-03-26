@@ -5,6 +5,7 @@ import Home from "@/pages/Home";
 import TermsOfService from "@/pages/TermsOfService";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Press from "@/pages/Press";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 function Router() {
   return (
@@ -19,6 +20,9 @@ function Router() {
 }
 
 function App() {
+  // Use the scroll to top hook
+  useScrollToTop();
+  
   return (
     <>
       <Router />
