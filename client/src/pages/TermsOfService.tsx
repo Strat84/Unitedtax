@@ -1,6 +1,8 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Badge } from "@/components/ui/badge";
+import { Container } from "@/components/ui/container";
 
 export default function TermsOfService() {
   const currentDate = new Date();
@@ -11,14 +13,25 @@ export default function TermsOfService() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar onStartTaxes={handleStartTaxes} />
       
+      {/* Hero Section with Gradient Background */}
+      <div className="bg-gradient-to-r from-primary-dark to-primary py-20 text-white">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center">
+            <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30 border-none px-4 py-1">Legal Document</Badge>
+            <h1 className="text-5xl font-bold mb-6">Terms of Service</h1>
+            <p className="text-xl opacity-90 max-w-2xl mx-auto">
+              Last Updated: {formattedDate}
+            </p>
+          </div>
+        </Container>
+      </div>
+      
       <main className="flex-grow">
-        <div className="py-12 max-w-4xl mx-auto px-4">
+        <div className="py-12 max-w-4xl mx-auto px-4 bg-white shadow-sm rounded-lg mt-8">
           <div className="prose prose-lg max-w-none">
-            <h1 className="text-4xl font-bold mb-6 text-primary-dark">Terms of Service</h1>
-            <p className="text-gray-600 mb-8">Last Updated: {formattedDate}</p>
             
             <p className="my-4">
               Thank you for choosing UNITEDTAX.AI for your tax preparation and advisory needs. 
