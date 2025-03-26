@@ -45,7 +45,7 @@ export default function ComingSoon() {
           {comingSoonProducts.map((product, index) => (
             <div
               key={index}
-              className="bg-neutral-50 rounded-lg p-6 border border-dashed border-neutral-300"
+              className="bg-neutral-50 rounded-lg p-6 border border-dashed border-neutral-300 flex flex-col h-full"
             >
               <div className="bg-primary-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
                 {product.icon}
@@ -53,8 +53,8 @@ export default function ComingSoon() {
               <h3 className="text-xl font-semibold mb-2 text-neutral-900">
                 {product.title}
               </h3>
-              <p className="text-neutral-600">{product.description}</p>
-              <div className="mt-4">
+              <p className="text-neutral-600 flex-grow">{product.description}</p>
+              <div className="mt-4 pt-2">
                 <span className="inline-block bg-neutral-200 text-neutral-600 text-xs font-medium px-2.5 py-0.5 rounded">
                   {product.date}
                 </span>
