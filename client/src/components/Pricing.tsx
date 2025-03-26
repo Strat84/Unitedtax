@@ -45,7 +45,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-[#25638b] mb-2">
-            My Price
+            Pricing
           </h2>
           <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
             Flat-rate pricing with no hidden fees or surprises
