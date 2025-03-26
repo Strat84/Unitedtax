@@ -30,7 +30,7 @@ export default function ComingSoon() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#74dcff] via-[#47a9c7] to-[#154060]">Coming Soon</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-normal bg-clip-text text-transparent bg-gradient-to-r from-[#74dcff] via-[#47a9c7] to-[#154060]">Coming Soon</h2>
           </div>
           <div className="mt-6">
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
