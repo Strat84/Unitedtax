@@ -96,7 +96,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                     {tier.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start">
                         <Check className="h-4 w-4 text-teal-500 mt-1 mr-2" />
-                        {feature === "Quarterly Tax Planning" && tier.name === "Business" ? (
+                        {(feature === "Quarterly Tax Planning" || feature === "Business + Owner Return Discounts") && tier.name === "Business" ? (
                           <div className="flex items-center">
                             <Tooltip>
                               <TooltipTrigger className="inline-flex items-center cursor-help">
@@ -106,7 +106,11 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                                 <Info className="h-4 w-4 text-primary hover:text-primary-dark transition-colors" />
                               </TooltipTrigger>
                               <TooltipContent side="top" align="center" className="max-w-xs p-4 bg-white text-neutral-800 shadow-lg rounded-lg border border-neutral-200">
-                                <p>Avoid surprises — we'll help you estimate and plan for quarterly tax payments.</p>
+                                <p>
+                                  {feature === "Quarterly Tax Planning" 
+                                    ? "Avoid surprises — we'll help you estimate and plan for quarterly tax payments."
+                                    : "Save when we file both your business and personal tax returns — ensuring accurate flow-through of income and deductions between both."}
+                                </p>
                               </TooltipContent>
                             </Tooltip>
                           </div>
