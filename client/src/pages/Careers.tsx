@@ -11,7 +11,7 @@ export default function Careers() {
   };
 
   const handleApply = () => {
-    window.location.href = "mailto:careers@unitedtax.ai";
+    window.location.href = "mailto:Matt@unitedtax.ai";
   };
 
   return (
@@ -174,14 +174,7 @@ export default function Careers() {
             </p>
             
             <div className="text-center my-10">
-              <p className="text-xl mb-6">📬 Reach out to: <a href="mailto:careers@unitedtax.ai" className="text-primary hover:underline">careers@unitedtax.ai</a></p>
-              
-              <Button 
-                onClick={handleApply}
-                className="bg-gradient-to-r from-primary-dark to-primary hover:from-primary hover:to-primary-dark text-white font-bold py-3 px-8 rounded-md shadow-md hover:shadow-lg transition-all text-lg"
-              >
-                Apply Now
-              </Button>
+              <p className="text-xl mb-6">📬 Reach out to: <a href="mailto:Matt@unitedtax.ai" className="text-primary hover:underline">Matt@unitedtax.ai</a></p>
               
               <p className="mt-8 text-xl font-semibold text-primary-dark">
                 Let's build the future of finance. Together.
