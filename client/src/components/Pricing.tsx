@@ -82,7 +82,7 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                       onClick={() => onSelectPlan(tier.name)} 
                       className="text-primary hover:underline text-sm font-medium"
                     >
-                      See My Price
+                      Calculate My Price
                     </button>
                   </div>
                 </div>
