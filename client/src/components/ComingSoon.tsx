@@ -7,21 +7,21 @@ export default function ComingSoon() {
       title: "Ledger IQ",
       description:
         "AI-powered bookkeeping that automates transaction categorization and financial reporting.",
-      date: "Coming Q1 2024",
+      date: "Coming Q1 2025",
     },
     {
       icon: <PieChart className="h-6 w-6 text-primary" />,
       title: "RSU Tracker",
       description:
         "Simplified management and tax planning for stock grants, options, and equity compensation.",
-      date: "Coming Q2 2024",
+      date: "Coming Q2 2025",
     },
     {
       icon: <Building className="h-6 w-6 text-primary" />,
       title: "AI Rental Property Manager",
       description:
         "Automated financial tracking, tenant management, and tax optimization for rental property owners.",
-      date: "Coming Q3 2024",
+      date: "Coming Q3 2025",
     },
   ];
 
