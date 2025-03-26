@@ -17,11 +17,9 @@ export default function Home() {
   const [calculatorOpen, setCalculatorOpen] = useState(false);
 
   const handleStartTaxes = () => {
-    toast({
-      title: "Start My Taxes",
-      description: "This would navigate to the sign-up flow.",
-    });
     console.log("Starting taxes");
+    // Redirect to the sign-up portal
+    window.location.href = "https://portal.unitedtax.ai/login?step=signUp";
   };
 
   const handleSeePricing = () => {

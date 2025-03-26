@@ -102,7 +102,10 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                 </ul>
                 <Button
                   className="w-full mt-auto"
-                  onClick={() => onSelectPlan(tier.name)}
+                  onClick={() => {
+                    onSelectPlan(tier.name);
+                    window.location.href = "https://portal.unitedtax.ai/login?step=signUp";
+                  }}
                 >
                   Start My Taxes
                 </Button>
