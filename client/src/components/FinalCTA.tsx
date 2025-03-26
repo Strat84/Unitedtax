@@ -11,7 +11,7 @@ export default function FinalCTA({ onStartTaxes }: FinalCTAProps) {
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
           Manage Your Taxes Smarter Today
         </h2>
-        <p className="text-lg mb-8 max-w-2xl mx-auto text-primary-100">
+        <p className="text-lg mb-4 max-w-2xl mx-auto text-primary-100">
           Join thousands of business owners and professionals who are saving time
           and money with UnitedTax.AI.
         </p>
