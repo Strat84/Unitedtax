@@ -5,6 +5,7 @@ import Home from "@/pages/Home";
 import TermsOfService from "@/pages/TermsOfService";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Press from "@/pages/Press";
+import Careers from "@/pages/Careers";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
       <Route path="/terms" component={TermsOfService} />
       <Route path="/privacy" component={PrivacyPolicy} />
       <Route path="/press" component={Press} />
+      <Route path="/careers" component={Careers} />
       <Route component={NotFound} />
     </Switch>
   );

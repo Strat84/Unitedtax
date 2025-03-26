@@ -1,0 +1,85 @@
+Careers at UnitedTax.AI
+Help Us Build the Future of Finance, One App at a Time.
+We’re not building just another fintech app.
+We’re building a family of powerful, AI-driven financial tools — designed to disrupt the tax, accounting, and financial planning space. From intelligent bookkeeping to compliance automation and predictive financial insights, our mission is clear: to become the next unicorn in the AI + finance space.
+
+And we’re looking for exceptional engineers to join us on this journey.
+
+We're Not Hiring. We're Inviting.
+We’re not looking to fill seats. We’re looking for vision-aligned builders who thrive at the intersection of finance, AI, and software craftsmanship.
+
+If you’re here, it’s probably because:
+
+You’ve built scalable tech in the financial or AI space.
+
+You think in systems, not tasks.
+
+You care more about impact than job titles.
+
+You want ownership — not just a paycheck.
+
+This is an invitation to build something meaningful with us, not for us.
+
+The Offer
+For the right person, we offer:
+
+✅ Equity ownership — Be a true stakeholder from day one.
+🚫 No upfront salary — This isn’t a job. It’s a co-founding opportunity.
+🔓 Unlimited upside — Help us win, and you win big.
+🧠 Technical autonomy — You’ll help architect the foundation of products that scale.
+
+We’re pre-raising. We’re post-idea. And we’re shipping. Fast.
+
+What We’re Building
+Our products revolve around:
+
+AI-powered tax automation
+
+Bookkeeping and compliance software
+
+Financial insights and analytics dashboards
+
+B2B and B2C SaaS tools for small businesses and tax pros
+
+Think: the next evolution of tools like QuickBooks, TurboTax, and Bench — with modern AI at the core.
+
+Tech Stack Preferences
+We’re primarily working in:
+
+TypeScript
+
+Python
+
+Node.js
+
+Vue.js
+
+React
+
+If you have deep experience with these technologies and an understanding of financial platforms, you’ll feel right at home.
+
+Bonus if you’ve worked with:
+Open Banking APIs, Stripe, AWS Lambda, FinTech security standards, or LLM integrations.
+
+Who We're Looking For
+We will not consider everyone.
+We’re looking for builders, not tourists. Specifically:
+
+Full-stack developers with 5+ years experience in product environments
+
+Engineers who’ve shipped financial, compliance, or AI products
+
+People who move fast, think like owners, and care about quality
+
+Collaborators with strong communication and initiative
+
+If that’s you — and you're ready to be a core part of something big — we want to meet you.
+
+Sound Like You?
+Send us your GitHub, portfolio, or LinkedIn. Tell us why you're interested.
+We don’t care about résumés. We care about real work and real vision.
+
+📬 Reach out to: careers@unitedtax.ai
+
+Let’s build the future of finance. Together.
+
