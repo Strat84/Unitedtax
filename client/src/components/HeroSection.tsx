@@ -62,7 +62,7 @@ export default function HeroSection({
             <img 
               src="/images/trustpilot-logo.png" 
               alt="Rated 5 stars on Trustpilot" 
-              className="h-14 sm:h-16" 
+              className="h-[84px] sm:h-[96px]" 
             />
           </a>
         </div>
