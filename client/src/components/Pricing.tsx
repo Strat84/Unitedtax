@@ -99,7 +99,8 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                         {(feature === "Quarterly Tax Planning" || 
                           feature === "Business + Owner Return Discounts" || 
                           feature === "Multi-Partner Basis Tracking" ||
-                          (feature === "Support for W-2s, 1099s, and More" && tier.name === "Personal")) ? (
+                          (feature === "Support for W-2s, 1099s, and More" && tier.name === "Personal") ||
+                          (feature === "Digital Document Storage" && tier.name === "Personal")) ? (
                           <div className="flex items-center">
                             <Tooltip>
                               <TooltipTrigger className="inline-flex items-center cursor-help">
@@ -116,7 +117,9 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
                                     ? "Save when we file both your business and personal tax returns — ensuring accurate flow-through of income and deductions between both."
                                     : feature === "Multi-Partner Basis Tracking"
                                     ? "We track each partner's capital, contributions, losses, and distributions — so your K-1s are accurate and IRS-compliant."
-                                    : "Whether you're employed, freelancing, investing, or collecting benefits — we support all standard income forms."}
+                                    : feature === "Support for W-2s, 1099s, and More"
+                                    ? "Whether you're employed, freelancing, investing, or collecting benefits — we support all standard income forms."
+                                    : "Keep all your tax documents in one secure place — accessible year-round whenever you need them."}
                                 </p>
                               </TooltipContent>
                             </Tooltip>
