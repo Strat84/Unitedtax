@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import TrustStats from "@/components/TrustStats";
+
 import HowItWorks from "@/components/HowItWorks";
 import WhoWeHelp from "@/components/WhoWeHelp";
 import WhyUs from "@/components/WhyUs";
@@ -50,7 +50,7 @@ export default function Home() {
           onStartTaxes={handleStartTaxes}
           onSeePricing={handleSeePricing}
         />
-        <TrustStats />
+
         <HowItWorks />
         <WhoWeHelp />
         <WhyUs />

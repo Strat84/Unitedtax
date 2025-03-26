@@ -10,7 +10,7 @@ export default function HeroSection({
   onSeePricing,
 }: HeroSectionProps) {
   return (
-    <section className="bg-gradient-to-b from-neutral-50 to-white pt-16 pb-3">
+    <section className="bg-gradient-to-b from-neutral-50 to-white pt-20 pb-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
           <div className="lg:w-1/2 space-y-6">
