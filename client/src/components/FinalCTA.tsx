@@ -15,9 +15,9 @@ export default function FinalCTA({ onStartTaxes }: FinalCTAProps) {
           Join thousands of business owners and professionals who are saving time
           and money with UnitedTax.AI.
         </p>
-        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 max-w-3xl mx-auto">
+        <div className="bg-white/15 backdrop-blur-sm rounded-lg p-8 max-w-3xl mx-auto">
           <h3 className="text-3xl font-bold mb-4 text-white">Want to Chat?</h3>
-          <p className="text-lg mb-6 text-primary-50">
+          <p className="text-lg mb-6 text-white">
             If you'd like to discuss your tax situation before getting started, we'd be happy to chat and help you make an informed decision when choosing your next accountant.
           </p>
         </div>
