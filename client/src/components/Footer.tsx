@@ -1,4 +1,5 @@
 import { Facebook, Twitter, Linkedin } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Footer() {
   return (
@@ -100,9 +101,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link href="/terms" className="hover:text-white transition-colors">
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
