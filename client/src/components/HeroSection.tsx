@@ -63,7 +63,7 @@ export default function HeroSection({
                 <div className="text-blue-100 text-sm">Average Savings</div>
               </div>
               <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                <div className="text-3xl font-bold text-white">2-3</div>
+                <div className="text-3xl font-bold text-white">3</div>
                 <div className="text-blue-100 text-sm">Day Avg. Turnaround</div>
               </div>
             </div>
