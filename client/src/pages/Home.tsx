@@ -11,6 +11,7 @@ import ComingSoon from "@/components/ComingSoon";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import { usePreloadImages } from "@/hooks/use-preload-images";
 
 export default function Home() {
   const { toast } = useToast();
@@ -37,6 +38,16 @@ export default function Home() {
     console.log(`Selected plan: ${plan}`);
   };
 
+  // Preload critical images for better performance
+  usePreloadImages([
+    '/images/hero-image.png',
+    '/images/female-entrepreneur.png',
+    '/images/real-estate-investor.png',
+    '/images/tech-employee.png',
+    '/images/freelancer.png',
+    '/images/trustpilot-logo.png'
+  ]);
+  
   useEffect(() => {
     // Set document title
     document.title = "UnitedTax.AI - AI-Assisted Tax Preparation";

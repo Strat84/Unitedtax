@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 interface HeroSectionProps {
   onStartTaxes: () => void;
@@ -75,10 +76,13 @@ export default function HeroSection({
               <div className="absolute -left-6 -top-6 w-24 h-24 bg-gradient-to-br from-blue-400 to-teal-300 rounded-full blur-xl opacity-60"></div>
               <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-gradient-to-br from-blue-500 to-indigo-400 rounded-full blur-xl opacity-60"></div>
               
-              <img
+              <ResponsiveImage
                 src="/images/hero-image.png"
                 alt="Business professional using United Tax service"
                 className="rounded-xl shadow-2xl w-full object-cover border-4 border-white/20 backdrop-blur-sm"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                quality="high"
+                priority={true}
               />
             </div>
           </div>
@@ -94,10 +98,11 @@ export default function HeroSection({
             aria-label="Read our reviews on Trustpilot"
           >
             <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-lg">
-              <img 
+              <ResponsiveImage 
                 src="/images/trustpilot-logo.png" 
                 alt="Rated 5 stars on Trustpilot" 
                 className="h-[84px] sm:h-[96px]" 
+                priority={true}
               />
             </div>
           </a>
