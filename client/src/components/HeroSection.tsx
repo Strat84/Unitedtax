@@ -57,18 +57,14 @@ export default function HeroSection({
             </div>
             
             {/* Quick stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-3">
+            <div className="grid grid-cols-2 gap-6 pt-4">
+              <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold text-white">40%</div>
                 <div className="text-blue-100 text-sm">Average Savings</div>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-3">
-                <div className="text-3xl font-bold text-white">15k+</div>
-                <div className="text-blue-100 text-sm">Returns Filed</div>
-              </div>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-3 hidden sm:block">
-                <div className="text-3xl font-bold text-white">24h</div>
-                <div className="text-blue-100 text-sm">Avg. Response Time</div>
+              <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold text-white">2-3</div>
+                <div className="text-blue-100 text-sm">Day Avg. Turnaround</div>
               </div>
             </div>
           </div>
