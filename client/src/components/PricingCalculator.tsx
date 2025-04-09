@@ -72,7 +72,7 @@ const pricingData = {
         counterInitialValue: 1,
         counterFirstYearNote: "Note: The $45 fee does not apply if we prepared the business tax return that generated the K-1."
       },
-      { id: "capital-gains", label: "Capital Gains", price: 25, description: "Schedule D for investment sales" },
+      { id: "capital-gains", label: "Capital Gains", price: 45, description: "Schedule D for investment sales" },
       { id: "property-sale", label: "Sale of Property or 1031 Exchange", price: 50, description: "Real estate transactions" },
       { id: "home-office", label: "Home Office", price: 25, description: "Home office deduction" },
       { id: "additional-state", label: "Additional State Filings", price: 45, description: "Per additional state" },
